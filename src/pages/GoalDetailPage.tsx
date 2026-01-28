@@ -1,11 +1,21 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Clock, Target, CheckCircle } from "lucide-react";
+import ScrollReveal from "@/components/ScrollReveal";
 import GlassCard from "@/components/GlassCard";
+
+// Import goal images
+import goalDreamHome from "@/assets/goal-dream-home.png";
+import goalWealthCreation from "@/assets/goal-wealth-creation.png";
+import goalRetirement from "@/assets/goal-retirement.png";
+import goalEducation from "@/assets/goal-education.png";
+import goalWedding from "@/assets/goal-wedding.png";
+import goalEmergency from "@/assets/goal-emergency.png";
 
 type GoalType = "dream-home" | "education" | "retirement" | "emergency" | "marriage" | "wealth";
 
 const goalDetails: Record<GoalType, {
   title: string;
+  image: string;
   description: string;
   timeHorizon: string;
   approach: string[];
@@ -13,6 +23,7 @@ const goalDetails: Record<GoalType, {
 }> = {
   "dream-home": {
     title: "Dream Home",
+    image: goalDreamHome,
     description: "Owning a home is one of life's biggest milestones. With proper planning and disciplined savings, you can make this dream a reality without overextending your finances.",
     timeHorizon: "5-10 years",
     approach: [
@@ -29,6 +40,7 @@ const goalDetails: Record<GoalType, {
   },
   education: {
     title: "Child's Education",
+    image: goalEducation,
     description: "Education costs are rising faster than general inflation. Starting early gives you the advantage of compounding and reduces the burden when the time comes.",
     timeHorizon: "10-18 years",
     approach: [
@@ -44,7 +56,8 @@ const goalDetails: Record<GoalType, {
     ],
   },
   retirement: {
-    title: "Retirement Planning",
+    title: "Retirement",
+    image: goalRetirement,
     description: "Retirement may seem far away, but the earlier you start, the easier it becomes. A well-planned retirement fund ensures you maintain your lifestyle without compromise.",
     timeHorizon: "20-30 years",
     approach: [
@@ -60,7 +73,8 @@ const goalDetails: Record<GoalType, {
     ],
   },
   emergency: {
-    title: "Emergency Fund",
+    title: "Financial Emergency",
+    image: goalEmergency,
     description: "An emergency fund is your financial safety net. It protects you from taking on debt or liquidating investments during unexpected situations.",
     timeHorizon: "6-12 months",
     approach: [
@@ -76,8 +90,9 @@ const goalDetails: Record<GoalType, {
     ],
   },
   marriage: {
-    title: "Child's Marriage",
-    description: "A child's marriage is a significant family event. Planning ahead helps you celebrate without financial stress and gives you flexibility in your choices.",
+    title: "Child's Wedding",
+    image: goalWedding,
+    description: "A child's wedding is a significant family event. Planning ahead helps you celebrate without financial stress and gives you flexibility in your choices.",
     timeHorizon: "15-25 years",
     approach: [
       "Start early to leverage compounding",
@@ -93,6 +108,7 @@ const goalDetails: Record<GoalType, {
   },
   wealth: {
     title: "Wealth Creation",
+    image: goalWealthCreation,
     description: "Long-term wealth creation is about disciplined investing over time. It's not about timing the market, but time in the market.",
     timeHorizon: "10+ years",
     approach: [
@@ -126,8 +142,28 @@ const GoalDetailPage = () => {
 
   return (
     <>
-      <section className="py-12">
-        <div className="section-container">
+      {/* Cinematic Hero with goal image as background */}
+      <section 
+        className="relative min-h-[60vh] sm:min-h-[70vh] flex items-end"
+        style={{
+          backgroundImage: `url(${goal.image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Gradient overlay - darker at bottom for text */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.8) 30%, hsl(var(--background) / 0.3) 60%, transparent 100%),
+              radial-gradient(ellipse at center, transparent 40%, hsl(var(--background) / 0.5) 100%)
+            `,
+          }}
+        />
+
+        <div className="relative z-10 hero-container pb-12 sm:pb-16 pt-24">
           <Link
             to="/goals"
             className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
@@ -136,68 +172,79 @@ const GoalDetailPage = () => {
             Back to Goals
           </Link>
 
-          <div className="max-w-3xl animate-fade-up">
-            <h1 className="heading-xl mb-6">{goal.title}</h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+          <ScrollReveal>
+            <h1 className="heading-xl mb-4">
+              <span className="text-gradient-gold">{goal.title}</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
               {goal.description}
             </p>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className="py-8">
+      {/* Content Section */}
+      <section className="py-12 sm:py-16">
         <div className="section-container">
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Time Horizon */}
-            <GlassCard className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-6 h-6 text-accent" />
-                <h3 className="font-semibold">Time Horizon</h3>
-              </div>
-              <p className="text-2xl font-bold text-gradient-gold">{goal.timeHorizon}</p>
-            </GlassCard>
+            <ScrollReveal delay={0.1}>
+              <GlassCard className="p-6 h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="w-6 h-6 text-accent" />
+                  <h3 className="font-semibold">Time Horizon</h3>
+                </div>
+                <p className="text-2xl font-bold text-gradient-gold">{goal.timeHorizon}</p>
+              </GlassCard>
+            </ScrollReveal>
 
             {/* Approach */}
-            <GlassCard className="p-6 lg:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <Target className="w-6 h-6 text-accent" />
-                <h3 className="font-semibold">Suggested Approach</h3>
-              </div>
-              <ul className="space-y-3">
-                {goal.approach.map((item) => (
+            <ScrollReveal delay={0.2} className="lg:col-span-2">
+              <GlassCard className="p-6 h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <Target className="w-6 h-6 text-accent" />
+                  <h3 className="font-semibold">Suggested Approach</h3>
+                </div>
+                <ul className="space-y-3">
+                  {goal.approach.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </GlassCard>
+            </ScrollReveal>
+          </div>
+
+          {/* Considerations */}
+          <ScrollReveal delay={0.3}>
+            <GlassCard className="p-6 mt-6" hover={false}>
+              <h3 className="font-semibold mb-4">Key Considerations</h3>
+              <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {goal.considerations.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-muted-foreground">{item}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
+                    <span className="text-sm text-muted-foreground">{item}</span>
                   </li>
                 ))}
               </ul>
             </GlassCard>
-          </div>
-
-          {/* Considerations */}
-          <GlassCard className="p-6 mt-6" hover={false}>
-            <h3 className="font-semibold mb-4">Key Considerations</h3>
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {goal.considerations.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
-                  <span className="text-sm text-muted-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+          </ScrollReveal>
 
           {/* CTA */}
-          <GlassCard className="p-8 mt-8 text-center" hover={false}>
-            <h3 className="heading-md mb-4">Ready to start planning?</h3>
-            <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-              Book a consultation and let's create a personalized plan for your {goal.title.toLowerCase()} goal.
-            </p>
-            <Link to="/contact" className="btn-primary inline-flex">
-              Book a Consultation
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
-          </GlassCard>
+          <ScrollReveal delay={0.4}>
+            <GlassCard className="p-8 mt-8 text-center" hover={false}>
+              <h3 className="heading-md mb-4">Ready to start planning?</h3>
+              <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+                Book a consultation and let's create a personalized plan for your {goal.title.toLowerCase()} goal.
+              </p>
+              <Link to="/contact" className="btn-primary inline-flex">
+                Book a Consultation
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </GlassCard>
+          </ScrollReveal>
         </div>
       </section>
     </>
