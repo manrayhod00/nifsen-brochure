@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Shield, Heart, Eye, BookOpen, Users, ArrowRight } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
+import heroAboutBg from "@/assets/hero-about-bg.png";
 
 const values = [
   { icon: Shield, title: "Transparency", description: "Clear communication about our process, fees, and recommendations." },
@@ -10,39 +11,87 @@ const values = [
   { icon: Users, title: "Client Education", description: "We empower you to make informed decisions." },
 ];
 
-const galleryItems = [
-  {
-    title: "Client Education & Awareness",
-    description: "Regular workshops and sessions to help clients understand investment fundamentals.",
-  },
-  {
-    title: "Research and Portfolio Review",
-    description: "In-depth analysis sessions to ensure your portfolio stays aligned with goals.",
-  },
-  {
-    title: "Goal Planning Sessions",
-    description: "One-on-one consultations to map out your financial milestones.",
-  },
-];
-
 const AboutPage = () => {
   return (
     <>
-      {/* Hero */}
-      <section className="py-20">
-        <div className="section-container">
-          <div className="max-w-3xl">
-            <h1 className="heading-xl mb-6 animate-fade-up">Our Story</h1>
-            <p className="text-xl text-muted-foreground leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              NIFSEN Financial Services was founded with a simple belief: financial planning should be goal-first, transparent, and accessible to everyone.
-            </p>
+      {/* Hero - Cinematic Background */}
+      <section 
+        className="relative min-h-[90vh] lg:min-h-screen overflow-hidden flex items-center"
+        style={{
+          backgroundImage: `url(${heroAboutBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center right',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Gradient overlay - darker on left for text, lighter on right to reveal image */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 25%, hsl(var(--background) / 0.7) 50%, hsl(var(--background) / 0.3) 75%, transparent 100%)',
+          }}
+        />
+        
+        {/* Mobile overlay - darker overall */}
+        <div 
+          className="absolute inset-0 lg:hidden"
+          style={{
+            background: 'linear-gradient(to bottom, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.7) 50%, hsl(var(--background) / 0.85) 100%)',
+          }}
+        />
+
+        <div className="section-container relative z-10">
+          <div className="max-w-2xl lg:max-w-xl py-20 lg:py-0">
+            <div className="space-y-8 animate-fade-up text-center lg:text-left">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm">
+                <span className="text-sm font-medium text-foreground/90">Focused on India's growth 🇮🇳</span>
+              </div>
+
+              {/* Headline */}
+              <h1 className="heading-xl">
+                Partnering with you to build a{" "}
+                <span className="text-gradient-gold">stronger</span> Indian economy.
+              </h1>
+
+              {/* Subtext */}
+              <p className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0">
+                NIFSEN Financial Services was founded with a simple belief: financial planning should be goal-first, transparent, and accessible to everyone.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Link to="/services" className="btn-primary">
+                  Explore Our Services
+                </Link>
+                <Link to="/contact" className="btn-secondary">
+                  Meet Our Team
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Story Content */}
-      <section className="py-16">
-        <div className="section-container">
+      {/* Story Content - Blends with the same background feel */}
+      <section 
+        className="relative py-20 overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroAboutBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Heavy overlay to make it feel like a continuation */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 20%, hsl(var(--background) / 0.92) 100%)',
+          }}
+        />
+
+        <div className="section-container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="space-y-6 animate-fade-up">
               <h2 className="heading-md">Why NIFSEN Exists</h2>
@@ -67,9 +116,24 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20">
-        <div className="section-container">
+      {/* Values - Continuing the blended look */}
+      <section 
+        className="relative py-20 overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroAboutBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, hsl(var(--background) / 0.92) 0%, hsl(var(--background) / 0.88) 50%, hsl(var(--background) / 0.92) 100%)',
+          }}
+        />
+
+        <div className="section-container relative z-10">
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-4">Our Values</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -91,9 +155,25 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section id="gallery" className="py-20">
-        <div className="section-container">
+      {/* Gallery - Reusing the same background with different positioning */}
+      <section 
+        id="gallery" 
+        className="relative py-20 overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroAboutBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'bottom right',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, hsl(var(--background) / 0.92) 0%, hsl(var(--background) / 0.85) 50%, hsl(var(--background) / 0.95) 100%)',
+          }}
+        />
+
+        <div className="section-container relative z-10">
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-4">Gallery</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -101,19 +181,30 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="space-y-8">
-            {galleryItems.map((item, index) => (
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Client Education & Awareness", description: "Regular workshops and sessions to help clients understand investment fundamentals." },
+              { title: "Research and Portfolio Review", description: "In-depth analysis sessions to ensure your portfolio stays aligned with goals." },
+              { title: "Goal Planning Sessions", description: "One-on-one consultations to map out your financial milestones." },
+            ].map((item, index) => (
               <GlassCard
                 key={item.title}
-                className={`p-8 ${index % 2 === 1 ? "lg:ml-auto lg:max-w-2xl" : "lg:max-w-2xl"}`}
-                hover={false}
+                className="p-6 overflow-hidden"
+                hover
               >
                 <div className="animate-fade-up" style={{ animationDelay: `${index * 0.15}s` }}>
-                  <div className="aspect-video bg-muted/30 rounded-xl mb-6 flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">Image placeholder</span>
+                  <div 
+                    className="aspect-video rounded-xl mb-6 relative overflow-hidden"
+                    style={{
+                      backgroundImage: `url(${heroAboutBg})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: index === 0 ? 'center' : index === 1 ? 'right center' : 'left center',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <p className="text-muted-foreground text-sm">{item.description}</p>
                 </div>
               </GlassCard>
             ))}
