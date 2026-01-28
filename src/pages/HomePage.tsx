@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
 import { Target, TrendingUp, RefreshCw, Shield, FileText, Users, ArrowRight, CheckCircle, Quote } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroIllustration from "@/assets/hero-illustration.png";
 
 const HeroSection = () => (
-  <section 
-    className="hero-cinematic"
-    style={{ backgroundImage: `url(${heroBg})` }}
-  >
-    <div className="hero-cinematic-content h-full min-h-screen flex items-center">
-      <div className="section-container py-20">
-        <div className="max-w-2xl space-y-8 animate-fade-up">
+  <section className="relative py-16 lg:py-24 overflow-hidden">
+    <div className="section-container">
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left Content */}
+        <div className="space-y-8 animate-fade-up">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -49,6 +47,19 @@ const HeroSection = () => (
               </span>
             ))}
           </div>
+        </div>
+
+        {/* Right Illustration */}
+        <div className="relative animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <div className="relative z-10">
+            <img
+              src={heroIllustration}
+              alt="Wealth growth illustration"
+              className="w-full max-w-lg mx-auto lg:max-w-none"
+            />
+          </div>
+          {/* Glow behind illustration */}
+          <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent blur-3xl" />
         </div>
       </div>
     </div>

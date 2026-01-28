@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { Shield, Heart, Eye, BookOpen, Users, ArrowRight } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
-import aboutHeroBg from "@/assets/about-hero-bg.jpg";
-import aboutStoryBg from "@/assets/about-story-bg.jpg";
 
 const values = [
   { icon: Shield, title: "Transparency", description: "Clear communication about our process, fees, and recommendations." },
@@ -12,80 +10,58 @@ const values = [
   { icon: Users, title: "Client Education", description: "We empower you to make informed decisions." },
 ];
 
+const galleryItems = [
+  {
+    title: "Client Education & Awareness",
+    description: "Regular workshops and sessions to help clients understand investment fundamentals.",
+  },
+  {
+    title: "Research and Portfolio Review",
+    description: "In-depth analysis sessions to ensure your portfolio stays aligned with goals.",
+  },
+  {
+    title: "Goal Planning Sessions",
+    description: "One-on-one consultations to map out your financial milestones.",
+  },
+];
+
 const AboutPage = () => {
   return (
     <>
-      {/* Cinematic Hero */}
-      <section 
-        className="hero-cinematic"
-        style={{ backgroundImage: `url(${aboutHeroBg})` }}
-      >
-        <div className="hero-cinematic-content h-full min-h-screen flex items-center">
-          <div className="section-container py-20">
-            <div className="max-w-2xl space-y-8 animate-fade-up">
-              {/* Pill chip */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30">
-                <span className="text-xl">🇮🇳</span>
-                <span className="text-sm font-medium text-foreground/90">Focused on India's growth</span>
-              </div>
-
-              {/* Headline */}
-              <h1 className="heading-xl">
-                Partnering with <span className="text-gradient-gold">you</span> to build a{" "}
-                <span className="text-gradient-gold">stronger</span> Indian economy.
-              </h1>
-
-              {/* Subtext */}
-              <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
-                At NIFSEN Investment Services, we empower you to achieve your financial goals. With our expert guidance and investing solutions, we contribute to building a brighter future for India's economy.
-              </p>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-4">
-                <Link to="/services" className="btn-primary">
-                  Explore Our Services
-                </Link>
-                <Link to="/contact" className="btn-secondary">
-                  Meet Our Team
-                </Link>
-              </div>
-            </div>
+      {/* Hero */}
+      <section className="py-20">
+        <div className="section-container">
+          <div className="max-w-3xl">
+            <h1 className="heading-xl mb-6 animate-fade-up">Our Story</h1>
+            <p className="text-xl text-muted-foreground leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
+              NIFSEN Financial Services was founded with a simple belief: financial planning should be goal-first, transparent, and accessible to everyone.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Story Panel - Cinematic */}
-      <section 
-        className="cinematic-panel"
-        style={{ backgroundImage: `url(${aboutStoryBg})` }}
-      >
-        <div className="cinematic-panel-content h-full min-h-[80vh] flex items-center">
-          <div className="section-container py-20">
-            <div className="max-w-2xl space-y-8 animate-fade-up">
-              <h2 className="heading-lg">Our Story</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-xl font-semibold text-accent mb-3">Why NIFSEN Exists</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    We noticed that many investors make decisions based on market noise, tips, or short-term trends. This often leads to poor outcomes and unnecessary stress.
-                  </p>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold text-accent mb-3">Client-first Philosophy</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    NIFSEN was created to bring calm and clarity to investing. We focus on understanding your goals first, then building a strategy that aligns with your timeline and risk comfort.
-                  </p>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold text-accent mb-3">Our Promise</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Every recommendation we make starts with one question: "Is this right for the client?" Our process is designed to eliminate conflicts of interest and ensure transparency.
-                  </p>
-                </div>
-              </div>
+      {/* Story Content */}
+      <section className="py-16">
+        <div className="section-container">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div className="space-y-6 animate-fade-up">
+              <h2 className="heading-md">Why NIFSEN Exists</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                We noticed that many investors make decisions based on market noise, tips, or short-term trends. This often leads to poor outcomes and unnecessary stress.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                NIFSEN was created to bring calm and clarity to investing. We focus on understanding your goals first, then building a strategy that aligns with your timeline and risk comfort.
+              </p>
+            </div>
+
+            <div className="space-y-6 animate-fade-up" style={{ animationDelay: "0.15s" }}>
+              <h2 className="heading-md">Client-first Philosophy</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Every recommendation we make starts with one question: "Is this right for the client?" Our process is designed to eliminate conflicts of interest and ensure transparency.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                We believe in disciplined investing, regular reviews, and honest conversations. No jargon, no pressure — just straightforward guidance.
+              </p>
             </div>
           </div>
         </div>
@@ -115,52 +91,32 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* What We Do */}
-      <section className="py-20">
+      {/* Gallery */}
+      <section id="gallery" className="py-20">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="heading-lg mb-4">What We Do</h2>
+            <h2 className="heading-lg mb-4">Gallery</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Glimpses of how we work with our clients.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <GlassCard className="p-8">
-              <div className="animate-fade-up">
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6">
-                  <BookOpen className="w-6 h-6 text-accent" />
+          <div className="space-y-8">
+            {galleryItems.map((item, index) => (
+              <GlassCard
+                key={item.title}
+                className={`p-8 ${index % 2 === 1 ? "lg:ml-auto lg:max-w-2xl" : "lg:max-w-2xl"}`}
+                hover={false}
+              >
+                <div className="animate-fade-up" style={{ animationDelay: `${index * 0.15}s` }}>
+                  <div className="aspect-video bg-muted/30 rounded-xl mb-6 flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">Image placeholder</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Client Education & Awareness</h3>
-                <p className="text-muted-foreground">
-                  Regular workshops and sessions to help clients understand investment fundamentals and make informed decisions.
-                </p>
-              </div>
-            </GlassCard>
-            
-            <GlassCard className="p-8">
-              <div className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6">
-                  <Eye className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Research and Portfolio Review</h3>
-                <p className="text-muted-foreground">
-                  In-depth analysis sessions to ensure your portfolio stays aligned with your goals and market conditions.
-                </p>
-              </div>
-            </GlassCard>
-            
-            <GlassCard className="p-8">
-              <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6">
-                  <Users className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Goal Planning Sessions</h3>
-                <p className="text-muted-foreground">
-                  One-on-one consultations to map out your financial milestones and create actionable investment strategies.
-                </p>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            ))}
           </div>
         </div>
       </section>
