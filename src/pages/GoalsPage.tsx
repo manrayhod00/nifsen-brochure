@@ -1,49 +1,51 @@
 import { Link } from "react-router-dom";
-import { Home, GraduationCap, Umbrella, PiggyBank, Heart, TrendingUp, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
+
+// Import goal images
+import goalDreamHome from "@/assets/goal-dream-home.png";
+import goalWealthCreation from "@/assets/goal-wealth-creation.png";
+import goalRetirement from "@/assets/goal-retirement.png";
+import goalEducation from "@/assets/goal-education.png";
+import goalWedding from "@/assets/goal-wedding.png";
+import goalEmergency from "@/assets/goal-emergency.png";
 
 const goals = [
   {
-    icon: Home,
+    image: goalDreamHome,
     title: "Dream Home",
     description: "Save for your perfect home with a structured investment plan.",
     href: "/goals/dream-home",
-    color: "from-blue-500/20 to-cyan-500/20",
   },
   {
-    icon: GraduationCap,
+    image: goalEducation,
     title: "Child's Education",
     description: "Secure your child's educational future with early planning.",
     href: "/goals/education",
-    color: "from-purple-500/20 to-pink-500/20",
   },
   {
-    icon: Umbrella,
+    image: goalRetirement,
     title: "Retirement",
     description: "Build a comfortable corpus for your golden years.",
     href: "/goals/retirement",
-    color: "from-orange-500/20 to-yellow-500/20",
   },
   {
-    icon: PiggyBank,
+    image: goalEmergency,
     title: "Emergency Fund",
     description: "Create a safety net for unexpected life events.",
     href: "/goals/emergency",
-    color: "from-green-500/20 to-emerald-500/20",
   },
   {
-    icon: Heart,
+    image: goalWedding,
     title: "Child's Marriage",
     description: "Plan ahead for your child's special day.",
     href: "/goals/marriage",
-    color: "from-rose-500/20 to-pink-500/20",
   },
   {
-    icon: TrendingUp,
+    image: goalWealthCreation,
     title: "Wealth Creation",
     description: "Grow your wealth with long-term disciplined investing.",
     href: "/goals/wealth",
-    color: "from-amber-500/20 to-orange-500/20",
   },
 ];
 
@@ -70,22 +72,33 @@ const GoalsPage = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {goals.map((goal, index) => (
               <Link key={goal.title} to={goal.href}>
-                <GlassCard className="p-8 h-full group">
+                <GlassCard className="p-0 h-full group overflow-hidden">
                   <div
                     className="animate-fade-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${goal.color} flex items-center justify-center mb-6`}>
-                      <goal.icon className="w-8 h-8 text-accent" />
+                    {/* Image container */}
+                    <div className="relative aspect-square overflow-hidden">
+                      <img 
+                        src={goal.image} 
+                        alt={goal.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {/* Gradient overlay at bottom */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
-                      {goal.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4">{goal.description}</p>
-                    <span className="inline-flex items-center text-accent font-medium">
-                      Learn more
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </span>
+                    
+                    {/* Content */}
+                    <div className="p-6 -mt-16 relative z-10">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+                        {goal.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm mb-4">{goal.description}</p>
+                      <span className="inline-flex items-center text-accent font-medium text-sm">
+                        Learn more
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
                   </div>
                 </GlassCard>
               </Link>

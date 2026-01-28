@@ -1,16 +1,40 @@
 import { Link } from "react-router-dom";
 import { Target, TrendingUp, RefreshCw, Shield, FileText, Users, ArrowRight, CheckCircle, Quote } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
-import heroIllustration from "@/assets/hero-illustration.png";
+import heroHomeBg from "@/assets/hero-home-bg.png";
 
 const HeroSection = () => (
-  <section className="relative py-16 lg:py-24 overflow-hidden">
-    <div className="section-container">
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
+  <section 
+    className="relative min-h-screen lg:min-h-screen overflow-hidden flex items-center"
+    style={{
+      backgroundImage: `url(${heroHomeBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center right',
+      backgroundRepeat: 'no-repeat',
+    }}
+  >
+    {/* Gradient overlay - darker on left for text, lighter on right to reveal image */}
+    <div 
+      className="absolute inset-0"
+      style={{
+        background: 'linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 25%, hsl(var(--background) / 0.7) 50%, hsl(var(--background) / 0.3) 75%, transparent 100%)',
+      }}
+    />
+    
+    {/* Mobile overlay - darker overall */}
+    <div 
+      className="absolute inset-0 lg:hidden"
+      style={{
+        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.7) 50%, hsl(var(--background) / 0.85) 100%)',
+      }}
+    />
+
+    <div className="section-container relative z-10">
+      <div className="max-w-2xl lg:max-w-xl py-20 lg:py-0">
         {/* Left Content */}
-        <div className="space-y-8 animate-fade-up">
+        <div className="space-y-8 animate-fade-up text-center lg:text-left">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground/90">Goal-first investing · discipline · clarity</span>
           </div>
@@ -24,12 +48,12 @@ const HeroSection = () => (
           </h1>
 
           {/* Subtext */}
-          <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0">
             NIFSEN Financial Services helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             <Link to="/contact" className="btn-primary">
               Book a Consultation
             </Link>
@@ -39,7 +63,7 @@ const HeroSection = () => (
           </div>
 
           {/* Trust Chips */}
-          <div className="flex flex-wrap gap-3 pt-2">
+          <div className="flex flex-wrap gap-3 pt-2 justify-center lg:justify-start">
             {["Transparent process", "Integrity first", "Long-term focus"].map((chip) => (
               <span key={chip} className="trust-chip">
                 <CheckCircle className="w-4 h-4 mr-2 text-accent" />
@@ -47,19 +71,6 @@ const HeroSection = () => (
               </span>
             ))}
           </div>
-        </div>
-
-        {/* Right Illustration */}
-        <div className="relative animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          <div className="relative z-10">
-            <img
-              src={heroIllustration}
-              alt="Wealth growth illustration"
-              className="w-full max-w-lg mx-auto lg:max-w-none"
-            />
-          </div>
-          {/* Glow behind illustration */}
-          <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent blur-3xl" />
         </div>
       </div>
     </div>
