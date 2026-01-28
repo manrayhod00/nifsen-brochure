@@ -278,6 +278,119 @@
     background: hsla(262, 50%, 50%, 0.15);
     color: hsl(40, 20%, 95%);
   }
+  
+  /* Cinematic Hero Section */
+  .hero-cinematic {
+    @apply relative w-full;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .hero-cinematic::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      hsla(250, 30%, 8%, 0.95) 0%,
+      hsla(250, 30%, 8%, 0.85) 25%,
+      hsla(252, 40%, 12%, 0.6) 50%,
+      hsla(252, 40%, 12%, 0.3) 75%,
+      transparent 100%
+    );
+    z-index: 1;
+  }
+  
+  .hero-cinematic-content {
+    @apply relative z-10;
+  }
+  
+  /* About page cinematic panels */
+  .cinematic-panel {
+    @apply relative w-full;
+    min-height: 80vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .cinematic-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      hsla(250, 30%, 8%, 0.92) 0%,
+      hsla(250, 30%, 8%, 0.8) 30%,
+      hsla(252, 40%, 12%, 0.5) 60%,
+      hsla(252, 40%, 12%, 0.2) 100%
+    );
+    z-index: 1;
+  }
+  
+  .cinematic-panel-content {
+    @apply relative z-10;
+  }
+  
+  /* Goal card with image background */
+  .goal-card {
+    @apply relative overflow-hidden rounded-2xl;
+    aspect-ratio: 1;
+  }
+  
+  .goal-card-image {
+    @apply absolute inset-0 w-full h-full object-cover transition-transform duration-500;
+  }
+  
+  .goal-card:hover .goal-card-image {
+    transform: scale(1.05);
+  }
+  
+  .goal-card-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(
+      to top,
+      hsla(250, 30%, 8%, 0.9) 0%,
+      hsla(250, 30%, 8%, 0.4) 50%,
+      transparent 100%
+    );
+  }
+  
+  .goal-card-content {
+    @apply absolute inset-0 flex flex-col justify-end p-6;
+  }
+  
+  /* Mobile responsive cinematic */
+  @media (max-width: 768px) {
+    .hero-cinematic {
+      min-height: 90vh;
+      background-position: center center;
+    }
+    
+    .hero-cinematic::before {
+      background: linear-gradient(
+        180deg,
+        hsla(250, 30%, 8%, 0.7) 0%,
+        hsla(250, 30%, 8%, 0.85) 40%,
+        hsla(250, 30%, 8%, 0.95) 100%
+      );
+    }
+    
+    .cinematic-panel {
+      min-height: 70vh;
+    }
+    
+    .cinematic-panel::before {
+      background: linear-gradient(
+        180deg,
+        hsla(250, 30%, 8%, 0.6) 0%,
+        hsla(250, 30%, 8%, 0.85) 50%,
+        hsla(250, 30%, 8%, 0.95) 100%
+      );
+    }
+  }
 }
 
 @layer utilities {
