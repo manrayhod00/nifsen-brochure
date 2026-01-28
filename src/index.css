@@ -159,9 +159,16 @@
     color: hsl(40, 20%, 85%);
   }
   
-  /* Section container */
+  /* Section container - wider with fluid behavior */
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto px-4 sm:px-6 lg:px-6 xl:px-10;
+    width: min(1440px, 100% - 48px);
+  }
+  
+  /* Hero-specific wider container */
+  .hero-container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 xl:px-10;
+    width: min(1440px, 100% - 48px);
   }
   
   /* Heading styles */

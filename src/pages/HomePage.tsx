@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { Target, TrendingUp, RefreshCw, Shield, FileText, Users, ArrowRight, CheckCircle, Quote } from "lucide-react";
+import { motion } from "framer-motion";
 import GlassCard from "@/components/GlassCard";
+import ScrollReveal from "@/components/ScrollReveal";
 import heroHomeBg from "@/assets/hero-home-bg.png";
 
 const HeroSection = () => (
   <section 
-    className="relative min-h-screen lg:min-h-screen overflow-hidden flex items-center"
+    className="relative min-h-[90vh] lg:min-h-screen overflow-hidden flex items-center"
     style={{
       backgroundImage: `url(${heroHomeBg})`,
       backgroundSize: 'cover',
@@ -29,49 +31,85 @@ const HeroSection = () => (
       }}
     />
 
-    <div className="section-container relative z-10">
-      <div className="max-w-2xl lg:max-w-xl py-20 lg:py-0">
+    <div className="hero-container relative z-10">
+      <div className="max-w-2xl lg:max-w-2xl py-20 lg:py-0">
         {/* Left Content */}
-        <div className="space-y-8 animate-fade-up text-center lg:text-left">
+        <motion.div 
+          className="space-y-8 text-center lg:text-left"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+        >
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm">
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm font-medium text-foreground/90">Goal-first investing · discipline · clarity</span>
-          </div>
+          </motion.div>
 
           {/* Headline */}
-          <h1 className="heading-xl">
+          <motion.h1 
+            className="heading-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             Build wealth with{" "}
             <span className="text-gradient-gold">calm</span> strategy.
             <br />
             Stay <span className="text-gradient-gold">consistent</span>.
-          </h1>
+          </motion.h1>
 
           {/* Subtext */}
-          <p className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0">
+          <motion.p 
+            className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             NIFSEN Financial Services helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
-          </p>
+          </motion.p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <motion.div 
+            className="flex flex-wrap gap-4 justify-center lg:justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
             <Link to="/contact" className="btn-primary">
               Book a Consultation
             </Link>
             <Link to="/services" className="btn-secondary">
               Explore Services
             </Link>
-          </div>
+          </motion.div>
 
           {/* Trust Chips */}
-          <div className="flex flex-wrap gap-3 pt-2 justify-center lg:justify-start">
-            {["Transparent process", "Integrity first", "Long-term focus"].map((chip) => (
-              <span key={chip} className="trust-chip">
+          <motion.div 
+            className="flex flex-wrap gap-3 pt-2 justify-center lg:justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {["Transparent process", "Integrity first", "Long-term focus"].map((chip, index) => (
+              <motion.span 
+                key={chip} 
+                className="trust-chip"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+              >
                 <CheckCircle className="w-4 h-4 mr-2 text-accent" />
                 {chip}
-              </span>
+              </motion.span>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   </section>
@@ -99,31 +137,27 @@ const WhatWeDoSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           <h2 className="heading-lg mb-4">What we do</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Three core areas — calm on the surface, strong in execution.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <GlassCard
-              key={service.title}
-              className="p-8 text-center"
-              hover
-            >
-              <div
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+            <ScrollReveal key={service.title} delay={index * 0.1}>
+              <GlassCard
+                className="p-8 text-center h-full"
+                hover
               >
                 <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/20 flex items-center justify-center">
                   <service.icon className="w-8 h-8 text-accent" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
                 <p className="text-muted-foreground">{service.description}</p>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -142,24 +176,21 @@ const WhyNifsenSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           <h2 className="heading-lg mb-4">Why NIFSEN</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Our approach is built on principles that put your interests first.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {reasons.map((reason, index) => (
-            <GlassCard key={reason.title} className="p-6 text-center">
-              <div
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
+            <ScrollReveal key={reason.title} delay={index * 0.08}>
+              <GlassCard className="p-6 text-center h-full">
                 <reason.icon className="w-10 h-10 mx-auto mb-4 text-accent" />
                 <h4 className="font-medium text-foreground/90">{reason.title}</h4>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -194,21 +225,18 @@ const ServicesSnapshotSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           <h2 className="heading-lg mb-4">Our Services</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Comprehensive financial guidance tailored to your needs.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <Link key={service.title} to={service.href}>
-              <GlassCard className="p-6 h-full group">
-                <div
-                  className="animate-fade-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
+            <ScrollReveal key={service.title} delay={index * 0.1}>
+              <Link to={service.href}>
+                <GlassCard className="p-6 h-full group">
                   <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors">
                     {service.title}
                   </h3>
@@ -219,9 +247,9 @@ const ServicesSnapshotSection = () => {
                     Learn more
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </span>
-                </div>
-              </GlassCard>
-            </Link>
+                </GlassCard>
+              </Link>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -240,12 +268,12 @@ const HowItWorksSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           <h2 className="heading-lg mb-4">How it works</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A simple, structured approach to achieving your financial goals.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="relative">
           {/* Connection line */}
@@ -253,19 +281,15 @@ const HowItWorksSection = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((step, index) => (
-              <div
-                key={step.number}
-                className="relative animate-fade-up"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <GlassCard className="p-6 text-center relative z-10">
+              <ScrollReveal key={step.number} delay={index * 0.12}>
+                <GlassCard className="p-6 text-center relative z-10 h-full">
                   <div className="text-3xl font-bold text-gradient-gold mb-3">
                     {step.number}
                   </div>
                   <h4 className="font-semibold mb-2">{step.title}</h4>
                   <p className="text-sm text-muted-foreground">{step.description}</p>
                 </GlassCard>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -296,23 +320,17 @@ const TestimonialsSection = () => {
   return (
     <section className="py-20">
       <div className="section-container">
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           <h2 className="heading-lg mb-4">What clients say</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Building trust through consistent service and results.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
-            <GlassCard
-              key={index}
-              className="p-8"
-            >
-              <div
-                className="animate-fade-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
+            <ScrollReveal key={index} delay={index * 0.1}>
+              <GlassCard className="p-8 h-full">
                 <Quote className="w-8 h-8 text-accent/40 mb-4" />
                 <p className="text-foreground/90 mb-6 italic leading-relaxed">
                   "{testimonial.quote}"
@@ -321,8 +339,8 @@ const TestimonialsSection = () => {
                   <span className="font-medium text-foreground">{testimonial.name}</span>
                   <span className="text-muted-foreground"> • {testimonial.location}</span>
                 </div>
-              </div>
-            </GlassCard>
+              </GlassCard>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -333,16 +351,18 @@ const TestimonialsSection = () => {
 const CTASection = () => (
   <section className="py-20">
     <div className="section-container">
-      <GlassCard className="p-12 text-center" hover={false}>
-        <h2 className="heading-md mb-4">Start your goal-first plan today</h2>
-        <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-          Take the first step towards financial clarity. Book a free consultation with our team.
-        </p>
-        <Link to="/contact" className="btn-primary inline-flex">
-          Book a Consultation
-          <ArrowRight className="w-5 h-5 ml-2" />
-        </Link>
-      </GlassCard>
+      <ScrollReveal>
+        <GlassCard className="p-12 text-center" hover={false}>
+          <h2 className="heading-md mb-4">Start your goal-first plan today</h2>
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+            Take the first step towards financial clarity. Book a free consultation with our team.
+          </p>
+          <Link to="/contact" className="btn-primary inline-flex">
+            Book a Consultation
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Link>
+        </GlassCard>
+      </ScrollReveal>
     </div>
   </section>
 );
