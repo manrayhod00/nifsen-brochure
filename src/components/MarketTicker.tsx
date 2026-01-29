@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { TrendingUp, TrendingDown, Minus, Clock } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Clock, RefreshCw } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface MarketData {
   symbol: string;
@@ -8,87 +9,51 @@ interface MarketData {
   change: number;
   changePercent: number;
   isOpen?: boolean;
+  currency?: string;
 }
 
-// Mock data generator for realistic market simulation
-const generateMockData = (): MarketData[] => {
-  const baseData = [
-    { symbol: "NIFTY", name: "Nifty 50", basePrice: 24850, volatility: 0.8 },
-    { symbol: "SENSEX", name: "Sensex", basePrice: 81500, volatility: 0.75 },
-    { symbol: "BANKNIFTY", name: "Bank Nifty", basePrice: 52300, volatility: 1.2 },
-    { symbol: "NASDAQ", name: "Nasdaq", basePrice: 19850, volatility: 0.9 },
-    { symbol: "DOW", name: "Dow Jones", basePrice: 43200, volatility: 0.6 },
-    { symbol: "GOLD", name: "Gold", basePrice: 78500, volatility: 0.4 },
-    { symbol: "SILVER", name: "Silver", basePrice: 89200, volatility: 0.7 },
-    { symbol: "CRUDE", name: "Crude Oil", basePrice: 6150, volatility: 1.5 },
-  ];
-
-  return baseData.map((item) => {
-    const changePercent = (Math.random() - 0.5) * item.volatility * 2;
-    const change = (item.basePrice * changePercent) / 100;
-    const price = item.basePrice + change;
-    
-    return {
-      symbol: item.symbol,
-      name: item.name,
-      price: Math.round(price * 100) / 100,
-      change: Math.round(change * 100) / 100,
-      changePercent: Math.round(changePercent * 100) / 100,
-      isOpen: true,
-    };
-  });
-};
-
-// Try to fetch real data from free APIs
-const fetchRealMarketData = async (): Promise<MarketData[] | null> => {
+const fetchMarketData = async (): Promise<MarketData[]> => {
   try {
-    // Using Yahoo Finance API through a CORS proxy alternative
-    // Note: Free APIs have limitations, we'll use mock data as fallback
-    const response = await fetch(
-      "https://query1.finance.yahoo.com/v7/finance/quote?symbols=^NSEI,^BSESN,^NSEBANK,^IXIC,^DJI,GC=F,SI=F,CL=F",
-      { mode: "cors" }
-    );
+    console.log("Fetching live market data from backend...");
     
-    if (!response.ok) return null;
+    const { data, error } = await supabase.functions.invoke("market-data");
     
-    const data = await response.json();
-    const quotes = data?.quoteResponse?.result;
+    if (error) {
+      console.error("Edge function error:", error);
+      throw new Error(error.message);
+    }
     
-    if (!quotes || quotes.length === 0) return null;
+    if (data?.success && data?.data) {
+      console.log("Live market data received:", data.data.length, "quotes");
+      return data.data;
+    }
     
-    const symbolMap: Record<string, { symbol: string; name: string }> = {
-      "^NSEI": { symbol: "NIFTY", name: "Nifty 50" },
-      "^BSESN": { symbol: "SENSEX", name: "Sensex" },
-      "^NSEBANK": { symbol: "BANKNIFTY", name: "Bank Nifty" },
-      "^IXIC": { symbol: "NASDAQ", name: "Nasdaq" },
-      "^DJI": { symbol: "DOW", name: "Dow Jones" },
-      "GC=F": { symbol: "GOLD", name: "Gold" },
-      "SI=F": { symbol: "SILVER", name: "Silver" },
-      "CL=F": { symbol: "CRUDE", name: "Crude Oil" },
-    };
-    
-    return quotes.map((quote: any) => ({
-      symbol: symbolMap[quote.symbol]?.symbol || quote.symbol,
-      name: symbolMap[quote.symbol]?.name || quote.shortName,
-      price: quote.regularMarketPrice,
-      change: quote.regularMarketChange,
-      changePercent: quote.regularMarketChangePercent,
-      isOpen: quote.marketState === "REGULAR",
-    }));
+    throw new Error(data?.error || "Failed to fetch market data");
   } catch (error) {
-    console.log("Using mock market data (API unavailable)");
-    return null;
+    console.error("Error fetching market data:", error);
+    throw error;
   }
 };
 
 const MarketItem = ({ data }: { data: MarketData }) => {
   const isPositive = data.change > 0;
   const isNeutral = data.change === 0;
+  const currency = data.currency || "₹";
+  
+  // Format price based on value
+  const formatPrice = (price: number) => {
+    if (price >= 10000) {
+      return price.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+    }
+    return price.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+  };
   
   return (
     <div className="flex items-center gap-2 px-4 py-1 whitespace-nowrap">
       <span className="font-semibold text-foreground/90">{data.symbol}</span>
-      <span className="text-foreground">₹{data.price.toLocaleString("en-IN")}</span>
+      <span className="text-foreground">
+        {currency}{formatPrice(data.price)}
+      </span>
       <span
         className={`flex items-center gap-0.5 text-xs font-medium ${
           isPositive
@@ -116,29 +81,37 @@ const MarketTicker = () => {
   const [marketData, setMarketData] = useState<MarketData[]>([]);
   const [marketStatus, setMarketStatus] = useState<"open" | "closed">("closed");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
 
   const updateMarketData = async () => {
-    const realData = await fetchRealMarketData();
-    if (realData) {
-      setMarketData(realData);
-    } else {
-      setMarketData(generateMockData());
+    try {
+      setError(null);
+      const data = await fetchMarketData();
+      setMarketData(data);
+      setLastUpdated(new Date());
+      
+      // Determine market status based on Indian market hours
+      const now = new Date();
+      const istOffset = 5.5 * 60 * 60 * 1000;
+      const istTime = new Date(now.getTime() + istOffset);
+      const hours = istTime.getUTCHours();
+      const minutes = istTime.getUTCMinutes();
+      const day = istTime.getUTCDay();
+      const timeInMinutes = hours * 60 + minutes;
+      const isWeekday = day >= 1 && day <= 5;
+      const isMarketHours = timeInMinutes >= 555 && timeInMinutes <= 930;
+      
+      // Also check if any quotes show as open
+      const anyOpen = data.some((d) => d.isOpen);
+      setMarketStatus(anyOpen || (isWeekday && isMarketHours) ? "open" : "closed");
+    } catch (err) {
+      console.error("Failed to update market data:", err);
+      setError("Failed to load market data");
+    } finally {
+      setIsLoading(false);
     }
-    setLastUpdated(new Date());
-    
-    // Check if Indian market is open (9:15 AM - 3:30 PM IST, Mon-Fri)
-    const now = new Date();
-    const istOffset = 5.5 * 60 * 60 * 1000;
-    const istTime = new Date(now.getTime() + istOffset);
-    const hours = istTime.getUTCHours();
-    const minutes = istTime.getUTCMinutes();
-    const day = istTime.getUTCDay();
-    const timeInMinutes = hours * 60 + minutes;
-    const isWeekday = day >= 1 && day <= 5;
-    const isMarketHours = timeInMinutes >= 555 && timeInMinutes <= 930; // 9:15 to 15:30
-    
-    setMarketStatus(isWeekday && isMarketHours ? "open" : "closed");
   };
 
   useEffect(() => {
@@ -150,12 +123,31 @@ const MarketTicker = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (marketData.length === 0) {
+  if (isLoading) {
     return (
       <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
-        <div className="section-container py-1.5">
-          <div className="flex items-center justify-center text-xs text-muted-foreground">
-            Loading market data...
+        <div className="section-container py-2">
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <RefreshCw className="w-3 h-3 animate-spin" />
+            Loading live market data...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || marketData.length === 0) {
+    return (
+      <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
+        <div className="section-container py-2">
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <span>{error || "Market data unavailable"}</span>
+            <button 
+              onClick={updateMarketData}
+              className="text-accent hover:text-accent/80 underline"
+            >
+              Retry
+            </button>
           </div>
         </div>
       </div>
