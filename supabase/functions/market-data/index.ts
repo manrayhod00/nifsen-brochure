@@ -78,88 +78,14 @@ async function fetchNSEData(): Promise<MarketQuote[]> {
   }
 }
 
-// Fetch international data from alternative sources
-async function fetchGoogleFinanceData(): Promise<MarketQuote[]> {
-  const symbols = [
-    { gSymbol: ".IXIC", symbol: "NASDAQ", name: "Nasdaq", currency: "$" },
-    { gSymbol: ".DJI", symbol: "DOW", name: "Dow Jones", currency: "$" },
-    { gSymbol: "GC:CMX", symbol: "GOLD", name: "Gold", currency: "$" },
-    { gSymbol: "SI:CMX", symbol: "SILVER", name: "Silver", currency: "$" },
-    { gSymbol: "CL:NYM", symbol: "CRUDE", name: "Crude Oil", currency: "$" },
-  ];
-
-  const quotes: MarketQuote[] = [];
-  
-  // Use Finance Data API (free tier)
-  for (const sym of symbols) {
-    try {
-      const url = `https://www.google.com/finance/quote/${sym.gSymbol}`;
-      // Google Finance doesn't have a proper API, so we'll use scraped data
-      // For now, use approximate market data
-      quotes.push({
-        symbol: sym.symbol,
-        name: sym.name,
-        price: 0, // Will be filled by fallback
-        change: 0,
-        changePercent: 0,
-        isOpen: false,
-        currency: sym.currency,
-      });
-    } catch (error) {
-      console.log(`Failed to fetch ${sym.symbol}`);
-    }
-  }
-  
-  return quotes;
-}
-
-// BSE India API for Sensex
-async function fetchBSEData(): Promise<MarketQuote | null> {
-  try {
-    const response = await fetch("https://api.bseindia.com/BseIndiaAPI/api/Sensex/w", {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'application/json',
-        'Referer': 'https://www.bseindia.com/',
-      },
-    });
-    
-    if (!response.ok) return null;
-    
-    const data = await response.json();
-    
-    return {
-      symbol: "SENSEX",
-      name: "Sensex",
-      price: parseFloat(data.CurrValue || 0),
-      change: parseFloat(data.Chg || 0),
-      changePercent: parseFloat(data.PcChg || 0),
-      isOpen: true,
-      currency: "₹",
-    };
-  } catch (error) {
-    console.error("BSE fetch error:", error);
-    return null;
-  }
-}
-
-// Fallback with realistic market-based estimates
-function getRealisticFallbackData(): MarketQuote[] {
-  // These are approximate current market levels (updated regularly)
-  // The percentages are randomized slightly for realistic feel
+// Fallback with realistic market-based estimates for NSE only
+function getNSEFallbackData(): MarketQuote[] {
   const baseData = [
     { symbol: "NIFTY", name: "Nifty 50", basePrice: 23250, currency: "₹" },
-    { symbol: "SENSEX", name: "Sensex", basePrice: 76800, currency: "₹" },
     { symbol: "BANKNIFTY", name: "Bank Nifty", basePrice: 49200, currency: "₹" },
-    { symbol: "NASDAQ", name: "Nasdaq", basePrice: 19850, currency: "$" },
-    { symbol: "DOW", name: "Dow Jones", basePrice: 44500, currency: "$" },
-    { symbol: "GOLD", name: "Gold", basePrice: 2780, currency: "$" },
-    { symbol: "SILVER", name: "Silver", basePrice: 31.50, currency: "$" },
-    { symbol: "CRUDE", name: "Crude Oil", basePrice: 72.80, currency: "$" },
   ];
   
   return baseData.map(item => {
-    // Small random variation (-0.5% to +0.5%) for realistic feel
     const variation = (Math.random() - 0.5) * 1;
     const changePercent = parseFloat(variation.toFixed(2));
     const change = parseFloat(((item.basePrice * changePercent) / 100).toFixed(2));
@@ -184,48 +110,22 @@ Deno.serve(async (req) => {
   try {
     console.log('Fetching market data...');
     
-    // Try to fetch real data from multiple sources in parallel
-    const [nseData, bseData] = await Promise.allSettled([
-      fetchNSEData(),
-      fetchBSEData(),
-    ]);
+    // Try to fetch real data from NSE
+    const nseData = await fetchNSEData();
     
-    const allQuotes: MarketQuote[] = [];
-    
-    // Add NSE data
-    if (nseData.status === 'fulfilled' && nseData.value.length > 0) {
-      allQuotes.push(...nseData.value);
-      console.log(`Got ${nseData.value.length} quotes from NSE`);
-    }
-    
-    // Add BSE data
-    if (bseData.status === 'fulfilled' && bseData.value) {
-      allQuotes.push(bseData.value);
-      console.log('Got SENSEX from BSE');
-    }
-    
-    // If we got some real data, fill in missing with fallback
     let finalData: MarketQuote[];
     
-    if (allQuotes.length >= 2) {
-      // We have some real data, add international fallback
-      const fallback = getRealisticFallbackData();
-      const existingSymbols = new Set(allQuotes.map(q => q.symbol));
-      
-      for (const fb of fallback) {
-        if (!existingSymbols.has(fb.symbol)) {
-          allQuotes.push(fb);
-        }
-      }
-      finalData = allQuotes;
+    if (nseData.length > 0) {
+      console.log(`Got ${nseData.length} quotes from NSE`);
+      finalData = nseData;
     } else {
-      // Use full fallback data
+      // Use fallback data
       console.log('Using fallback data');
-      finalData = getRealisticFallbackData();
+      finalData = getNSEFallbackData();
     }
     
     // Sort in preferred order
-    const order = ['NIFTY', 'SENSEX', 'BANKNIFTY', 'NASDAQ', 'DOW', 'GOLD', 'SILVER', 'CRUDE'];
+    const order = ['NIFTY', 'BANKNIFTY'];
     finalData.sort((a, b) => order.indexOf(a.symbol) - order.indexOf(b.symbol));
     
     return new Response(
@@ -233,7 +133,7 @@ Deno.serve(async (req) => {
         success: true, 
         data: finalData,
         timestamp: new Date().toISOString(),
-        isLive: allQuotes.length >= 2,
+        isLive: nseData.length > 0,
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -243,7 +143,7 @@ Deno.serve(async (req) => {
     console.error('Error:', error);
     
     // Return fallback data even on error
-    const fallbackData = getRealisticFallbackData();
+    const fallbackData = getNSEFallbackData();
     
     return new Response(
       JSON.stringify({ 
