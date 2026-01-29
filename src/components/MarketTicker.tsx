@@ -79,7 +79,6 @@ const MarketItem = ({ data }: { data: MarketData }) => {
 
 const MarketTicker = () => {
   const [marketData, setMarketData] = useState<MarketData[]>([]);
-  const [marketStatus, setMarketStatus] = useState<"open" | "closed">("closed");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,21 +90,6 @@ const MarketTicker = () => {
       const data = await fetchMarketData();
       setMarketData(data);
       setLastUpdated(new Date());
-      
-      // Determine market status based on Indian market hours
-      const now = new Date();
-      const istOffset = 5.5 * 60 * 60 * 1000;
-      const istTime = new Date(now.getTime() + istOffset);
-      const hours = istTime.getUTCHours();
-      const minutes = istTime.getUTCMinutes();
-      const day = istTime.getUTCDay();
-      const timeInMinutes = hours * 60 + minutes;
-      const isWeekday = day >= 1 && day <= 5;
-      const isMarketHours = timeInMinutes >= 555 && timeInMinutes <= 930;
-      
-      // Also check if any quotes show as open
-      const anyOpen = data.some((d) => d.isOpen);
-      setMarketStatus(anyOpen || (isWeekday && isMarketHours) ? "open" : "closed");
     } catch (err) {
       console.error("Failed to update market data:", err);
       setError("Failed to load market data");
@@ -157,16 +141,14 @@ const MarketTicker = () => {
   return (
     <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
       <div className="relative">
-        {/* Market Status Badge */}
+        {/* Market Hours Badge */}
         <div className="absolute left-0 top-0 bottom-0 z-10 flex items-center pl-3 bg-gradient-to-r from-background-secondary via-background-secondary to-transparent pr-8">
           <div className="flex items-center gap-2">
-            <div
-              className={`w-2 h-2 rounded-full ${
-                marketStatus === "open" ? "bg-green-400 animate-pulse" : "bg-red-400"
-              }`}
-            />
             <span className="text-xs font-medium text-muted-foreground hidden sm:inline">
-              {marketStatus === "open" ? "Market Open" : "Market Closed"}
+              NSE: 9:15 AM - 3:30 PM
+            </span>
+            <span className="text-xs font-medium text-muted-foreground sm:hidden">
+              NSE
             </span>
           </div>
         </div>
