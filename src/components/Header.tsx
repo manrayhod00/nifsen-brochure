@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, Clock, ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import nifsenLogo from "@/assets/nifsen-logo.png";
+import MarketTicker from "./MarketTicker";
 
 interface DropdownItem {
   label: string;
@@ -196,33 +197,8 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Utility Bar */}
-      <div className="bg-background-secondary/80 backdrop-blur-sm border-b border-border/30">
-        <div className="section-container py-2">
-          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-            <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-              <a href="tel:+918088071633" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-                <Phone className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">+91 8088071633</span>
-              </a>
-              <a href="mailto:support@nifsengroups.in" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
-                <Mail className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">support@nifsengroups.in</span>
-              </a>
-              <span className="hidden lg:flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                Mon–Sat: 9:00 AM – 6:00 PM
-              </span>
-            </div>
-            <Link
-              to="/contact"
-              className="text-accent hover:text-accent/80 font-medium transition-colors"
-            >
-              Book a Consultation
-            </Link>
-          </div>
-        </div>
-      </div>
+      {/* Market Ticker */}
+      <MarketTicker />
 
       {/* Main Navbar */}
       <header

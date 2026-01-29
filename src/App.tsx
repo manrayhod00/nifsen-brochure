@@ -12,6 +12,7 @@ import CalculatorDetailPage from "./pages/CalculatorDetailPage";
 import GoalsPage from "./pages/GoalsPage";
 import GoalDetailPage from "./pages/GoalDetailPage";
 import KnowledgePage from "./pages/KnowledgePage";
+import BlogDetailPage from "./pages/BlogDetailPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/goals" element={<GoalsPage />} />
             <Route path="/goals/:type" element={<GoalDetailPage />} />
             <Route path="/knowledge" element={<KnowledgePage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
