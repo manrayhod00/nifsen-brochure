@@ -235,8 +235,12 @@ const Header = () => {
         <div className="section-container py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center">
-              <img src={nifsenLogo} alt="NIFSEN Groups" className="h-14 w-auto" />
+            <Link to="/" className="flex items-center gap-3">
+              <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto brightness-110 contrast-110" />
+              <div className="hidden sm:block">
+                <div className="text-lg font-bold text-foreground">NIFSEN Groups</div>
+                <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Wealth Management</div>
+              </div>
             </Link>
 
             {/* Desktop Nav */}

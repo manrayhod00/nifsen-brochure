@@ -9,8 +9,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center">
-              <img src={nifsenLogo} alt="NIFSEN Groups" className="h-12 w-auto" />
+            <Link to="/" className="flex items-center gap-3">
+              <img src={nifsenLogo} alt="NIFSEN" className="h-10 w-auto brightness-110 contrast-110" />
+              <div>
+                <div className="font-bold text-foreground">NIFSEN Groups</div>
+              </div>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Goal-first investing with transparent process, disciplined reviews, and risk-fit guidance.
