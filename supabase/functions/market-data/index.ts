@@ -16,8 +16,29 @@ interface MarketQuote {
 // NSE India API endpoints (official NSE website data)
 const NSE_INDICES_URL = "https://www.nseindia.com/api/allIndices";
 
+// Check if Indian market is currently open
+function isIndianMarketOpen(): boolean {
+  const now = new Date();
+  // Convert to IST (UTC+5:30)
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  const istTime = new Date(now.getTime() + istOffset);
+  
+  const hours = istTime.getUTCHours();
+  const minutes = istTime.getUTCMinutes();
+  const day = istTime.getUTCDay();
+  const timeInMinutes = hours * 60 + minutes;
+  
+  // Market hours: 9:15 AM to 3:30 PM IST (555 to 930 minutes)
+  const isWeekday = day >= 1 && day <= 5;
+  const isMarketHours = timeInMinutes >= 555 && timeInMinutes <= 930;
+  
+  return isWeekday && isMarketHours;
+}
+
 // Fetch NSE India indices data
 async function fetchNSEData(): Promise<MarketQuote[]> {
+  const marketOpen = isIndianMarketOpen();
+  
   try {
     // First, get cookies from NSE homepage
     const homeResponse = await fetch("https://www.nseindia.com", {
@@ -65,7 +86,7 @@ async function fetchNSEData(): Promise<MarketQuote[]> {
           price: index.last || 0,
           change: index.variation || 0,
           changePercent: index.percentChange || 0,
-          isOpen: true,
+          isOpen: marketOpen, // Use actual market hours check
           currency: "₹",
         });
       }
