@@ -71,7 +71,7 @@ const HeroSection = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            NIFSEN Financial Services helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
+            NIFSEN Groups helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
           </motion.p>
 
           {/* CTAs */}
@@ -301,19 +301,19 @@ const HowItWorksSection = () => {
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      quote: "NIFSEN helped me understand my risk profile and build a portfolio I'm comfortable with. The reviews are thorough and insightful.",
-      name: "Client",
+      quote: "I was always confused about where to invest my savings. NIFSEN team sat with me, understood my family situation, and suggested a simple plan. Now I invest every month without stress.",
+      name: "Rajesh Sharma",
       location: "Bengaluru",
     },
     {
-      quote: "The goal-first approach made all the difference. I now have clarity on my retirement planning.",
-      name: "Client",
+      quote: "After my father's retirement, we didn't know how to manage his corpus. The team helped us create a steady income plan. Very patient and supportive throughout.",
+      name: "Priya Venkatesh",
       location: "Hyderabad",
     },
     {
-      quote: "Professional, transparent, and always available. Highly recommend their services.",
-      name: "Client",
-      location: "Pune",
+      quote: "I've been investing for 3 years now. What I like most is they don't push products — they genuinely listen. My daughter's education fund is growing well.",
+      name: "Anand Kumar",
+      location: "Chennai",
     },
   ];
 
