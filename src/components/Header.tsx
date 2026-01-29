@@ -201,13 +201,13 @@ const Header = () => {
         <div className="section-container py-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
             <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-              <a href="tel:+919XXXXXXXXX" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <a href="tel:+918088071633" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
                 <Phone className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">+91 9XXXXXXXXX</span>
+                <span className="hidden sm:inline">+91 8088071633</span>
               </a>
-              <a href="mailto:support@nifsenfinance.in" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+              <a href="mailto:support@nifsengroups.in" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
                 <Mail className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">support@nifsenfinance.in</span>
+                <span className="hidden md:inline">support@nifsengroups.in</span>
               </a>
               <span className="hidden lg:flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
@@ -236,10 +236,10 @@ const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
-              <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto" />
+              <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto brightness-110 contrast-110" />
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-foreground">NIFSEN Financial Services</div>
-                <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Goals</div>
+                <div className="text-lg font-bold text-foreground">NIFSEN Groups</div>
+                <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Wealth Management</div>
               </div>
             </Link>
 

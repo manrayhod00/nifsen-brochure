@@ -10,9 +10,9 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-3">
-              <img src={nifsenLogo} alt="NIFSEN" className="h-10 w-auto" />
+              <img src={nifsenLogo} alt="NIFSEN" className="h-10 w-auto brightness-110 contrast-110" />
               <div>
-                <div className="font-bold text-foreground">NIFSEN Financial Services</div>
+                <div className="font-bold text-foreground">NIFSEN Groups</div>
               </div>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -76,14 +76,14 @@ const Footer = () => {
               </li>
               <li>
                 <span className="block text-foreground/80 mb-1">Phone</span>
-                <a href="tel:+919XXXXXXXXX" className="hover:text-foreground transition-colors">
-                  +91 9XXXXXXXXX
+                <a href="tel:+918088071633" className="hover:text-foreground transition-colors">
+                  +91 8088071633
                 </a>
               </li>
               <li>
                 <span className="block text-foreground/80 mb-1">Email</span>
-                <a href="mailto:support@nifsenfinance.in" className="hover:text-foreground transition-colors">
-                  support@nifsenfinance.in
+                <a href="mailto:support@nifsengroups.in" className="hover:text-foreground transition-colors">
+                  support@nifsengroups.in
                 </a>
               </li>
             </ul>
@@ -96,15 +96,13 @@ const Footer = () => {
         <div className="section-container py-6">
           {/* Regulatory */}
           <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-4">
-            <span>SEBI Reg. No: INZ0000XXXX (Placeholder)</span>
-            <span>•</span>
-            <span>ARN-XXXXX (Placeholder)</span>
+            <span>ARN: 253725</span>
           </div>
           
           {/* Disclaimers */}
           <div className="text-xs text-muted-foreground/70 space-y-2">
             <p>
-              Mutual fund investments are subject to market risks. Read all scheme-related documents carefully before investing.
+              Investments in security market is subject to market risks. Read all scheme-related documents carefully before investing.
             </p>
             <p>
               Past performance is not indicative of future results. The value of investments can go down as well as up.
@@ -116,7 +114,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="mt-6 pt-4 border-t border-border/20 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} NIFSEN Financial Services. All rights reserved.
+            © {new Date().getFullYear()} NIFSEN Groups. All rights reserved.
           </div>
         </div>
       </div>
