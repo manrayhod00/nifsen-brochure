@@ -71,8 +71,9 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
                 <span className="block text-foreground/80 mb-1">Address</span>
-                #21, 2nd Floor, MG Road,<br />
-                Bengaluru, Karnataka 560001
+                Ground Floor, Kakateeya Residency Apartment,<br />
+                Old HDFC Bank Building, Kappagal Road,<br />
+                Ballari - 583101
               </li>
               <li>
                 <span className="block text-foreground/80 mb-1">Phone</span>
