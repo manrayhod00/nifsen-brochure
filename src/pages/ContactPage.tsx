@@ -153,8 +153,9 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                      #21, 2nd Floor, MG Road,<br />
-                      Bengaluru, Karnataka 560001
+                      Ground Floor, Kakateeya Residency Apartment,<br />
+                      Old HDFC Bank Building, Kappagal Road,<br />
+                      Ballari - 583101
                     </p>
                   </div>
                 </div>
@@ -168,10 +169,10 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
                     <a
-                      href="tel:+919XXXXXXXXX"
+                      href="tel:+918088071633"
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      +91 9XXXXXXXXX
+                      +91 8088071633
                     </a>
                   </div>
                 </div>

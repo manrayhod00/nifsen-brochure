@@ -71,8 +71,9 @@ async function fetchNSEData(): Promise<MarketQuote[]> {
     const indices = data?.data || [];
     
     const targetIndices: Record<string, { symbol: string; name: string }> = {
-      "NIFTY 50": { symbol: "NIFTY", name: "Nifty 50" },
+      "NIFTY 50": { symbol: "NIFTY50", name: "Nifty 50" },
       "NIFTY BANK": { symbol: "BANKNIFTY", name: "Bank Nifty" },
+      "NIFTY MIDCAP 50": { symbol: "MIDCAPNIFTY", name: "Nifty Midcap 50" },
     };
     
     const quotes: MarketQuote[] = [];
@@ -102,8 +103,9 @@ async function fetchNSEData(): Promise<MarketQuote[]> {
 // Fallback with realistic market-based estimates for NSE only
 function getNSEFallbackData(): MarketQuote[] {
   const baseData = [
-    { symbol: "NIFTY", name: "Nifty 50", basePrice: 23250, currency: "₹" },
+    { symbol: "NIFTY50", name: "Nifty 50", basePrice: 23250, currency: "₹" },
     { symbol: "BANKNIFTY", name: "Bank Nifty", basePrice: 49200, currency: "₹" },
+    { symbol: "MIDCAPNIFTY", name: "Nifty Midcap 50", basePrice: 12500, currency: "₹" },
   ];
   
   return baseData.map(item => {
@@ -146,7 +148,7 @@ Deno.serve(async (req) => {
     }
     
     // Sort in preferred order
-    const order = ['NIFTY', 'BANKNIFTY'];
+    const order = ['NIFTY50', 'BANKNIFTY', 'MIDCAPNIFTY'];
     finalData.sort((a, b) => order.indexOf(a.symbol) - order.indexOf(b.symbol));
     
     return new Response(
