@@ -186,10 +186,10 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a
-                      href="mailto:support@nifsenfinance.in"
+                      href="mailto:support@nifseninvestmentservices.in"
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      support@nifsenfinance.in
+                      support@nifseninvestmentservices.in
                     </a>
                   </div>
                 </div>
