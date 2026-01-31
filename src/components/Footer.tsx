@@ -12,7 +12,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={nifsenLogo} alt="NIFSEN" className="h-10 w-auto brightness-110 contrast-110" />
               <div>
-                <div className="font-bold text-foreground">NIFSEN Groups</div>
+                <div className="font-bold text-foreground">NIFSEN GROUP</div>
               </div>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -97,7 +97,7 @@ const Footer = () => {
         <div className="section-container py-6">
           {/* Regulatory */}
           <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-4">
-            <span>ARN: 253725</span>
+            <span>Mutual Fund ARN: 253725</span>
           </div>
           
           {/* Disclaimers */}
@@ -115,7 +115,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="mt-6 pt-4 border-t border-border/20 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} NIFSEN Groups. All rights reserved.
+            © {new Date().getFullYear()} NIFSEN GROUP. All rights reserved.
           </div>
         </div>
       </div>

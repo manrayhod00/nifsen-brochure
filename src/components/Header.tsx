@@ -13,6 +13,7 @@ interface NavItem {
   label: string;
   href: string;
   dropdown?: DropdownItem[];
+  isExternal?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -57,6 +58,7 @@ const navItems: NavItem[] = [
     ],
   },
   { label: "Contact Us", href: "/contact" },
+  { label: "Open Demat", href: "https://mosl.co/MOSWEB/kc1PWeQYgr", isExternal: true },
 ];
 
 const DropdownMenu = ({ items, isOpen }: { items: DropdownItem[]; isOpen: boolean }) => {
@@ -102,6 +104,19 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
         </Link>
         <DropdownMenu items={item.dropdown} isOpen={isOpen} />
       </div>
+    );
+  }
+
+  if (item.isExternal) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-3 py-2 text-sm font-medium bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors duration-200"
+      >
+        {item.label}
+      </a>
     );
   }
 
@@ -166,6 +181,16 @@ const MobileNav = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }
                     </div>
                   )}
                 </>
+              ) : item.isExternal ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onClose}
+                  className="block py-4 text-accent font-medium"
+                >
+                  {item.label}
+                </a>
               ) : (
                 <Link
                   to={item.href}
@@ -214,7 +239,7 @@ const Header = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto brightness-110 contrast-110" />
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-foreground">NIFSEN Groups</div>
+                <div className="text-lg font-bold text-foreground">NIFSEN GROUP</div>
                 <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Wealth Management</div>
               </div>
             </Link>
