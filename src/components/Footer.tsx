@@ -83,8 +83,8 @@ const Footer = () => {
               </li>
               <li>
                 <span className="block text-foreground/80 mb-1">Email</span>
-                <a href="mailto:support@nifsengroups.in" className="hover:text-foreground transition-colors">
-                  support@nifsengroups.in
+                <a href="mailto:support@nifseninvestmentservices.in" className="hover:text-foreground transition-colors">
+                  support@nifseninvestmentservices.in
                 </a>
               </li>
             </ul>
