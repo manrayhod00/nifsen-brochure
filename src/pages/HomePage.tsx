@@ -71,7 +71,7 @@ const HeroSection = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            NIFSEN Groups helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
+            NIFSEN GROUP helps you invest with a transparent process — aligned to your goals, your time horizon, and your comfort with risk.
           </motion.p>
 
           {/* CTAs */}

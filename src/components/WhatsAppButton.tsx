@@ -3,7 +3,7 @@ import motilalOswalLogo from "@/assets/motilal-oswal-logo.png";
 
 const WhatsAppButton = () => {
   const phoneNumber = "+918088071633";
-  const message = "Hello, I would like to know more about NIFSEN Groups.";
+  const message = "Hello, I would like to know more about NIFSEN GROUP.";
   const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
   const openAccountUrl = "https://mosl.co/MOSWEB/kc1PWeQYgr";
 

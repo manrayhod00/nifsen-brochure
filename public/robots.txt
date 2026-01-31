@@ -1,8 +1,13 @@
+# NIFSEN GROUP - Investment Services
+# https://nifseninvestmentservices.in
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -10,5 +15,14 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://nifseninvestmentservices.in/sitemap.xml
+
+# Host
+Host: https://nifseninvestmentservices.in
