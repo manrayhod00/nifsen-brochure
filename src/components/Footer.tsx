@@ -12,7 +12,7 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={nifsenLogo} alt="NIFSEN" className="h-10 w-auto brightness-110 contrast-110" />
               <div>
-                <div className="font-bold text-foreground">NIFSEN GROUP</div>
+                <div className="font-bold text-foreground">NIFSEN Investment Services Limited</div>
               </div>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -115,7 +115,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="mt-6 pt-4 border-t border-border/20 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} NIFSEN GROUP. All rights reserved.
+            © {new Date().getFullYear()} NIFSEN Investment Services Limited. All rights reserved.
           </div>
         </div>
       </div>

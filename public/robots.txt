@@ -1,4 +1,4 @@
-# NIFSEN GROUP - Investment Services
+# NIFSEN Investment Services Limited
 # https://nifseninvestmentservices.in
 
 User-agent: Googlebot

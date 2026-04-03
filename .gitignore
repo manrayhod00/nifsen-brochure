@@ -12,6 +12,29 @@ dist
 dist-ssr
 *.local
 
+# Environment variables - never commit secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Old backup files
+*.bak
+index.backup*.html
+NIFSEN_LOGO.png
+
+# Old static website files (pre-React version)
+assets/css/
+assets/js/
+assets/img/
+/pages/
+/partials/
+
+# Supabase temp files
+supabase/.temp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

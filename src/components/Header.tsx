@@ -239,7 +239,7 @@ const Header = () => {
             <Link to="/" className="flex items-center gap-3">
               <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto brightness-110 contrast-110" />
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-foreground">NIFSEN GROUP</div>
+                <div className="text-lg font-bold text-foreground">NIFSEN Investment Services Limited</div>
                 <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Wealth Management</div>
               </div>
             </Link>
