@@ -31,8 +31,7 @@ export const branches: Branch[] = [
     ],
     pincode: "585401",
     state: "Karnataka",
-    mapEmbedUrl:
-      "https://www.google.com/maps?q=Nandadeep+Comhub,+Madiwala+Circle,+KHB+Nawadgeri,+Bidar,+585401&output=embed",
+    mapEmbedUrl: "https://www.google.com/maps?q=17.920013,77.514402&z=17&output=embed",
   },
   {
     id: "gangavathi",
@@ -44,8 +43,7 @@ export const branches: Branch[] = [
     ],
     pincode: "583227",
     state: "Karnataka",
-    mapEmbedUrl:
-      "https://www.google.com/maps?q=CBS+Complex,+Bus+Stand+Road,+Gangavathi,+Koppal,+583227&output=embed",
+    mapEmbedUrl: "https://www.google.com/maps?q=15.432166,76.530835&z=17&output=embed",
   },
 ];
 
