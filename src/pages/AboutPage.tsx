@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass } from "lucide-react";
+import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import heroAboutBg from "@/assets/hero-about-bg.png";
 import { useSEO } from "@/hooks/useSEO";
+import { branches } from "@/config/contact";
 
 const values = [
   { icon: Shield, title: "Transparency", description: "Clear communication about our process, fees, and recommendations." },
@@ -201,6 +202,49 @@ const AboutPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Where to find us */}
+      <section className="py-20">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h2 className="heading-lg mb-4">Where to find us</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Three offices across Karnataka — drop in at the one closest to you.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {branches.map((branch) => (
+              <GlassCard key={branch.id} className="p-6 h-full" hover={false}>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-accent" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <h3 className="font-semibold">{branch.city}</h3>
+                      {branch.isHeadOffice && (
+                        <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+                          Head Office
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {branch.addressLines.map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
+                      {branch.pincode}, {branch.state}
+                    </p>
+                  </div>
                 </div>
               </GlassCard>
             ))}

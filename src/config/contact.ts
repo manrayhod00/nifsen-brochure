@@ -1,3 +1,56 @@
+export interface Branch {
+  id: "bellary" | "bidar" | "gangavathi";
+  city: string;
+  isHeadOffice?: boolean;
+  addressLines: string[];
+  pincode: string;
+  state: string;
+  mapEmbedUrl: string;
+}
+
+export const branches: Branch[] = [
+  {
+    id: "bellary",
+    city: "Ballari",
+    isHeadOffice: true,
+    addressLines: [
+      "Ground Floor, Kakateeya Residency Apartment,",
+      "Old HDFC Bank Building, Kappagal Road,",
+    ],
+    pincode: "583101",
+    state: "Karnataka",
+    mapEmbedUrl: "https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed",
+  },
+  {
+    id: "bidar",
+    city: "Bidar",
+    addressLines: [
+      "1st Floor, Nandadeep Comhub,",
+      "Above Amulya Medical, Madiwala Circle,",
+      "KHB Nawadgeri,",
+    ],
+    pincode: "585401",
+    state: "Karnataka",
+    mapEmbedUrl:
+      "https://www.google.com/maps?q=Nandadeep+Comhub,+Madiwala+Circle,+KHB+Nawadgeri,+Bidar,+585401&output=embed",
+  },
+  {
+    id: "gangavathi",
+    city: "Gangavathi",
+    addressLines: [
+      "Motilal Oswal Shop 1, Ward 5,",
+      "CBS Complex, Bus Stand Road,",
+      "Koppal District,",
+    ],
+    pincode: "583227",
+    state: "Karnataka",
+    mapEmbedUrl:
+      "https://www.google.com/maps?q=CBS+Complex,+Bus+Stand+Road,+Gangavathi,+Koppal,+583227&output=embed",
+  },
+];
+
+export const headOffice = branches.find((b) => b.isHeadOffice) ?? branches[0];
+
 export const contact = {
   companyName: "NIFSEN Investment Services Limited",
   shortName: "NIFSEN",
@@ -7,12 +60,6 @@ export const contact = {
   email: "support@nifseninvestmentservices.in",
   whatsappMessage: "Hello, I would like to know more about NIFSEN Investment Services Limited.",
   whatsappConsultMessage: "Hello, I would like to schedule a consultation.",
-  address: {
-    line1: "Ground Floor, Kakateeya Residency Apartment,",
-    line2: "Old HDFC Bank Building, Kappagal Road,",
-    line3: "Ballari - 583101",
-  },
-  mapEmbedUrl: "https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed",
   openDematUrl: "https://mosl.co/MOSWEB/kc1PWeQYgr",
   arn: "253725",
 } as const;

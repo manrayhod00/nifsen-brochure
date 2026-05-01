@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import nifsenLogo from "@/assets/nifsen-logo.png";
-import { contact } from "@/config/contact";
+import { contact, branches } from "@/config/contact";
 
 const Footer = () => {
   return (
@@ -80,26 +80,44 @@ const Footer = () => {
           {/* Contact */}
           <div>
             <h4 className="text-foreground font-semibold mb-4">Contact</h4>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <span className="block text-foreground/80 mb-1">Address</span>
-                {contact.address.line1}<br />
-                {contact.address.line2}<br />
-                {contact.address.line3}
-              </li>
-              <li>
+            <div className="space-y-4 text-sm text-muted-foreground">
+              <div>
+                <span className="block text-foreground/80 mb-2">Offices</span>
+                <ul className="space-y-3">
+                  {branches.map((branch) => (
+                    <li key={branch.id} className="leading-snug">
+                      <span className="block text-foreground/90 text-xs font-semibold uppercase tracking-wider">
+                        {branch.city}
+                        {branch.isHeadOffice && (
+                          <span className="ml-1 text-accent normal-case font-medium">(Head Office)</span>
+                        )}
+                      </span>
+                      <span className="block text-xs">
+                        {branch.addressLines.map((line, i) => (
+                          <span key={i}>
+                            {line}
+                            <br />
+                          </span>
+                        ))}
+                        {branch.pincode}, {branch.state}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
                 <span className="block text-foreground/80 mb-1">Phone</span>
                 <a href={`tel:${contact.phone}`} className="hover:text-foreground transition-colors">
                   {contact.phoneDisplay}
                 </a>
-              </li>
-              <li>
+              </div>
+              <div>
                 <span className="block text-foreground/80 mb-1">Email</span>
                 <a href={`mailto:${contact.email}`} className="hover:text-foreground transition-colors">
                   {contact.email}
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>

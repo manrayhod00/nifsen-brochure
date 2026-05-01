@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, MessageCircle, Send, Loader2 } from "lucide-react"
 import GlassCard from "@/components/GlassCard";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { contact, whatsappLink } from "@/config/contact";
+import { contact, whatsappLink, branches, headOffice, type Branch } from "@/config/contact";
 import { useSEO } from "@/hooks/useSEO";
 
 const phoneRegex = /^\+?[0-9\s-]{10,15}$/;
@@ -15,10 +15,39 @@ interface FieldErrors {
   email?: string;
 }
 
+const BranchCard = ({ branch }: { branch: Branch }) => (
+  <GlassCard className="p-6" hover={false}>
+    <div className="flex items-start gap-4">
+      <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+        <MapPin className="w-6 h-6 text-accent" />
+      </div>
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          <h3 className="font-semibold">{branch.city}</h3>
+          {branch.isHeadOffice && (
+            <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+              Head Office
+            </span>
+          )}
+        </div>
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          {branch.addressLines.map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
+          {branch.pincode}, {branch.state}
+        </p>
+      </div>
+    </div>
+  </GlassCard>
+);
+
 const ContactPage = () => {
   useSEO({
-    title: "Contact Us",
-    description: `Talk to ${contact.companyName} in Ballari. Phone, WhatsApp, email, and office location.`,
+    title: "Contact Us — Ballari, Bidar & Gangavathi",
+    description: `Talk to ${contact.companyName}. Offices in Ballari (Head Office), Bidar, and Gangavathi, Karnataka.`,
     canonicalPath: "/contact",
   });
 
@@ -31,6 +60,9 @@ const ContactPage = () => {
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeBranchId, setActiveBranchId] = useState<Branch["id"]>(headOffice.id);
+
+  const activeBranch = branches.find((b) => b.id === activeBranchId) ?? headOffice;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -57,8 +89,6 @@ const ContactPage = () => {
 
     setIsSubmitting(true);
     try {
-      // `leads` table is defined in supabase/migrations/0001_create_leads_table.sql
-      // and is not in the generated Database types yet, so we cast around it.
       const { error } = await (supabase.from("leads" as never) as unknown as {
         insert: (row: Record<string, unknown>) => Promise<{ error: unknown }>;
       }).insert({
@@ -99,7 +129,8 @@ const ContactPage = () => {
               Let's <span className="text-gradient-gold">connect</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Have questions? Want to discuss your financial goals? We're here to help.
+              Have questions? Want to discuss your financial goals? We're here to help — across our
+              offices in Ballari, Bidar, and Gangavathi.
             </p>
           </div>
         </div>
@@ -204,21 +235,13 @@ const ContactPage = () => {
 
             {/* Contact Info */}
             <div className="space-y-6">
-              <GlassCard className="p-6" hover={false}>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Address</h3>
-                    <p className="text-muted-foreground">
-                      {contact.address.line1}<br />
-                      {contact.address.line2}<br />
-                      {contact.address.line3}
-                    </p>
-                  </div>
-                </div>
-              </GlassCard>
+              {/* Branches */}
+              <div id="branches" className="space-y-4 scroll-mt-24">
+                <h2 className="heading-md">Our Offices</h2>
+                {branches.map((branch) => (
+                  <BranchCard key={branch.id} branch={branch} />
+                ))}
+              </div>
 
               <GlassCard className="p-6" hover={false}>
                 <div className="flex items-start gap-4">
@@ -276,17 +299,41 @@ const ContactPage = () => {
                 </GlassCard>
               </a>
 
-              {/* Office Location Map */}
-              <GlassCard className="p-2 overflow-hidden" hover={false}>
-                <iframe
-                  title="NIFSEN office location"
-                  src={contact.mapEmbedUrl}
-                  className="w-full aspect-video rounded-lg border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
-              </GlassCard>
+              {/* Office Location Map with branch switcher */}
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2" role="tablist" aria-label="Office location">
+                  {branches.map((branch) => {
+                    const isActive = branch.id === activeBranchId;
+                    return (
+                      <button
+                        key={branch.id}
+                        role="tab"
+                        aria-selected={isActive}
+                        onClick={() => setActiveBranchId(branch.id)}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                        }`}
+                      >
+                        {branch.city}
+                        {branch.isHeadOffice && " · HO"}
+                      </button>
+                    );
+                  })}
+                </div>
+                <GlassCard className="p-2 overflow-hidden" hover={false}>
+                  <iframe
+                    key={activeBranch.id}
+                    title={`${activeBranch.city} office location`}
+                    src={activeBranch.mapEmbedUrl}
+                    className="w-full aspect-video rounded-lg border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </GlassCard>
+              </div>
             </div>
           </div>
         </div>
