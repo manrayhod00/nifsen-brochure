@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Clock, Target, CheckCircle } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import GlassCard from "@/components/GlassCard";
+import { useSEO } from "@/hooks/useSEO";
 
 // Import goal images
 import goalDreamHome from "@/assets/goal-dream-home.png";
@@ -128,6 +129,12 @@ const goalDetails: Record<GoalType, {
 const GoalDetailPage = () => {
   const { type } = useParams<{ type: GoalType }>();
   const goal = goalDetails[type as GoalType];
+
+  useSEO({
+    title: goal ? `${goal.title} — Goal Planning` : "Goal Planning",
+    description: goal ? goal.description : "Goal-based investment planning by NIFSEN.",
+    canonicalPath: `/goals/${type ?? ""}`,
+  });
 
   if (!goal) {
     return (

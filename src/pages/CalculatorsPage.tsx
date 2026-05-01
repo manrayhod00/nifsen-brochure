@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Calculator, TrendingUp, Target, CreditCard, ArrowRight } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
+import { useSEO } from "@/hooks/useSEO";
 
 const calculators = [
   {
@@ -30,6 +31,13 @@ const calculators = [
 ];
 
 const CalculatorsPage = () => {
+  useSEO({
+    title: "Free Financial Calculators — SIP, EMI, Retirement",
+    description:
+      "Free SIP, compounding, retirement and EMI calculators to plan your investments and loans.",
+    canonicalPath: "/calculators",
+  });
+
   return (
     <>
       {/* Hero */}

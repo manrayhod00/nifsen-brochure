@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Home } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const NotFound = () => {
+  useSEO({ title: "Page not found" });
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="text-center space-y-6 animate-fade-up">

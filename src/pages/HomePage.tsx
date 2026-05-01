@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { Target, TrendingUp, RefreshCw, Shield, FileText, Users, ArrowRight, CheckCircle, Quote } from "lucide-react";
+import { Target, TrendingUp, RefreshCw, Shield, FileText, Users, ArrowRight, CheckCircle, Lock, Compass, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import GlassCard from "@/components/GlassCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import heroHomeBg from "@/assets/hero-home-bg.png";
+import { useSEO } from "@/hooks/useSEO";
 
 const HeroSection = () => (
   <section 
@@ -167,10 +168,26 @@ const WhatWeDoSection = () => {
 
 const WhyNifsenSection = () => {
   const reasons = [
-    { icon: Shield, title: "Process-driven decisions" },
-    { icon: Target, title: "Risk-aligned recommendations" },
-    { icon: FileText, title: "Simple reporting" },
-    { icon: Users, title: "Long-term discipline" },
+    {
+      icon: Shield,
+      title: "Process-driven decisions",
+      description: "Every recommendation follows a documented framework — not gut feel or market noise.",
+    },
+    {
+      icon: Target,
+      title: "Risk-aligned recommendations",
+      description: "Plans built around your comfort with volatility, not someone else's benchmark.",
+    },
+    {
+      icon: FileText,
+      title: "Simple reporting",
+      description: "Clear, jargon-free statements so you always know how your money is doing.",
+    },
+    {
+      icon: Users,
+      title: "Long-term discipline",
+      description: "Regular reviews and steady rebalancing instead of chasing the latest trend.",
+    },
   ];
 
   return (
@@ -183,12 +200,13 @@ const WhyNifsenSection = () => {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {reasons.map((reason, index) => (
             <ScrollReveal key={reason.title} delay={index * 0.08}>
-              <GlassCard className="p-6 text-center h-full">
-                <reason.icon className="w-10 h-10 mx-auto mb-4 text-accent" />
-                <h4 className="font-medium text-foreground/90">{reason.title}</h4>
+              <GlassCard className="p-6 h-full">
+                <reason.icon className="w-10 h-10 mb-4 text-accent" />
+                <h4 className="font-semibold mb-2 text-foreground/90">{reason.title}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
@@ -298,22 +316,22 @@ const HowItWorksSection = () => {
   );
 };
 
-const TestimonialsSection = () => {
-  const testimonials = [
+const PromisesSection = () => {
+  const promises = [
     {
-      quote: "I was always confused about where to invest my savings. NIFSEN team sat with me, understood my family situation, and suggested a simple plan. Now I invest every month without stress.",
-      name: "Rajesh Sharma",
-      location: "Bengaluru",
+      icon: Lock,
+      title: "Transparent fee structure",
+      description: "We disclose how we get paid up front. No surprise charges, no hidden commissions baked into recommendations.",
     },
     {
-      quote: "After my father's retirement, we didn't know how to manage his corpus. The team helped us create a steady income plan. Very patient and supportive throughout.",
-      name: "Priya Venkatesh",
-      location: "Hyderabad",
+      icon: Compass,
+      title: "Goal-first conversations",
+      description: "We start by understanding what the money is for — a home, education, retirement — then build the plan backwards from there.",
     },
     {
-      quote: "I've been investing for 3 years now. What I like most is they don't push products — they genuinely listen. My daughter's education fund is growing well.",
-      name: "Anand Kumar",
-      location: "Chennai",
+      icon: MessageSquare,
+      title: "Honest, no-pressure advice",
+      description: "If a product isn't right for you, we say so. We'd rather you wait six months than buy something that doesn't fit.",
     },
   ];
 
@@ -321,24 +339,19 @@ const TestimonialsSection = () => {
     <section className="py-20">
       <div className="section-container">
         <ScrollReveal className="text-center mb-12">
-          <h2 className="heading-lg mb-4">What clients say</h2>
+          <h2 className="heading-lg mb-4">What you can expect</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Building trust through consistent service and results.
+            Three commitments that shape every conversation we have with clients.
           </p>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <ScrollReveal key={index} delay={index * 0.1}>
+          {promises.map((promise, index) => (
+            <ScrollReveal key={promise.title} delay={index * 0.1}>
               <GlassCard className="p-8 h-full">
-                <Quote className="w-8 h-8 text-accent/40 mb-4" />
-                <p className="text-foreground/90 mb-6 italic leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="text-sm">
-                  <span className="font-medium text-foreground">{testimonial.name}</span>
-                  <span className="text-muted-foreground"> • {testimonial.location}</span>
-                </div>
+                <promise.icon className="w-10 h-10 text-accent mb-5" />
+                <h3 className="text-xl font-semibold mb-3">{promise.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{promise.description}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
@@ -368,6 +381,13 @@ const CTASection = () => (
 );
 
 const HomePage = () => {
+  useSEO({
+    title: "NIFSEN Investment Services Limited | Goal-first Investing",
+    description:
+      "Mutual fund advisory, insurance planning and goal-based wealth management in Ballari, Karnataka. Transparent process, disciplined reviews, risk-fit guidance.",
+    canonicalPath: "/",
+  });
+
   return (
     <>
       <HeroSection />
@@ -375,7 +395,7 @@ const HomePage = () => {
       <WhyNifsenSection />
       <ServicesSnapshotSection />
       <HowItWorksSection />
-      <TestimonialsSection />
+      <PromisesSection />
       <CTASection />
     </>
   );

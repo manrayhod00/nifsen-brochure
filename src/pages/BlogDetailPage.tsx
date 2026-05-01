@@ -4,6 +4,7 @@ import { blogPosts } from "@/data/blogContent";
 import GlassCard from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "@/hooks/useSEO";
 
 const BlogDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +12,12 @@ const BlogDetailPage = () => {
   const { toast } = useToast();
 
   const blog = blogPosts.find((b) => b.id === slug);
+
+  useSEO({
+    title: blog ? blog.title : "Article not found",
+    description: blog ? blog.excerpt : "Article not found.",
+    canonicalPath: `/blog/${slug ?? ""}`,
+  });
 
   if (!blog) {
     return (

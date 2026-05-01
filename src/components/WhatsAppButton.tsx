@@ -1,11 +1,10 @@
 import { MessageCircle } from "lucide-react";
 import motilalOswalLogo from "@/assets/motilal-oswal-logo.png";
+import { contact, whatsappLink } from "@/config/contact";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "+918088071633";
-  const message = "Hello, I would like to know more about NIFSEN Investment Services Limited.";
-  const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
-  const openAccountUrl = "https://mosl.co/MOSWEB/kc1PWeQYgr";
+  const whatsappUrl = whatsappLink();
+  const openAccountUrl = contact.openDematUrl;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">

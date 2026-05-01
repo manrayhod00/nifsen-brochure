@@ -1,9 +1,27 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, MessageCircle, Send } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, Loader2 } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { contact, whatsappLink } from "@/config/contact";
+import { useSEO } from "@/hooks/useSEO";
+
+const phoneRegex = /^\+?[0-9\s-]{10,15}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+interface FieldErrors {
+  name?: string;
+  phone?: string;
+  email?: string;
+}
 
 const ContactPage = () => {
+  useSEO({
+    title: "Contact Us",
+    description: `Talk to ${contact.companyName} in Ballari. Phone, WhatsApp, email, and office location.`,
+    canonicalPath: "/contact",
+  });
+
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -11,33 +29,65 @@ const ContactPage = () => {
     email: "",
     message: "",
   });
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (errors[e.target.name as keyof FieldErrors]) {
+      setErrors((prev) => ({ ...prev, [e.target.name]: undefined }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const validate = (): FieldErrors => {
+    const next: FieldErrors = {};
+    if (!formData.name.trim()) next.name = "Please enter your name";
+    if (!phoneRegex.test(formData.phone.trim())) next.phone = "Enter a valid 10-15 digit phone number";
+    if (!emailRegex.test(formData.email.trim())) next.email = "Enter a valid email address";
+    return next;
+  };
 
-    // Simulate form submission
-    setTimeout(() => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      // `leads` table is defined in supabase/migrations/0001_create_leads_table.sql
+      // and is not in the generated Database types yet, so we cast around it.
+      const { error } = await (supabase.from("leads" as never) as unknown as {
+        insert: (row: Record<string, unknown>) => Promise<{ error: unknown }>;
+      }).insert({
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim() || null,
+        source: "contact_form",
+      });
+
+      if (error) throw error;
+
       toast({
-        title: "Request submitted!",
-        description: "We'll get back to you within 24 hours.",
+        title: "Request submitted",
+        description: "Thanks — we'll get back to you within 24 hours.",
       });
       setFormData({ name: "", phone: "", email: "", message: "" });
+    } catch {
+      toast({
+        title: "Couldn't submit your request",
+        description: `Please try WhatsApp or call ${contact.phoneDisplay} instead.`,
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
-  const whatsappUrl = `https://wa.me/918088071633?text=${encodeURIComponent(
-    "Hello, I would like to schedule a consultation."
-  )}`;
+  const whatsappUrl = whatsappLink(contact.whatsappConsultMessage);
 
   return (
     <>
@@ -62,7 +112,7 @@ const ContactPage = () => {
             {/* Form */}
             <GlassCard className="p-8" hover={false}>
               <h2 className="heading-md mb-6">Request a Call Back</h2>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Full Name
@@ -74,9 +124,11 @@ const ContactPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    aria-invalid={!!errors.name}
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    placeholder="John Doe"
+                    placeholder="Your full name"
                   />
+                  {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
                 </div>
 
                 <div>
@@ -90,9 +142,11 @@ const ContactPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
+                    aria-invalid={!!errors.phone}
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                     placeholder="+91 98765 43210"
                   />
+                  {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
                 </div>
 
                 <div>
@@ -106,9 +160,11 @@ const ContactPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    aria-invalid={!!errors.email}
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    placeholder="john@example.com"
+                    placeholder="you@example.com"
                   />
+                  {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -129,10 +185,13 @@ const ContactPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center"
                 >
                   {isSubmitting ? (
-                    "Submitting..."
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Submitting...
+                    </>
                   ) : (
                     <>
                       <Send className="w-5 h-5 mr-2" />
@@ -153,9 +212,9 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                      Ground Floor, Kakateeya Residency Apartment,<br />
-                      Old HDFC Bank Building, Kappagal Road,<br />
-                      Ballari - 583101
+                      {contact.address.line1}<br />
+                      {contact.address.line2}<br />
+                      {contact.address.line3}
                     </p>
                   </div>
                 </div>
@@ -169,10 +228,10 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
                     <a
-                      href="tel:+918088071633"
+                      href={`tel:${contact.phone}`}
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      +91 8088071633
+                      {contact.phoneDisplay}
                     </a>
                   </div>
                 </div>
@@ -186,10 +245,10 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a
-                      href="mailto:support@nifseninvestmentservices.in"
+                      href={`mailto:${contact.email}`}
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      support@nifseninvestmentservices.in
+                      {contact.email}
                     </a>
                   </div>
                 </div>
@@ -221,7 +280,7 @@ const ContactPage = () => {
               <GlassCard className="p-2 overflow-hidden" hover={false}>
                 <iframe
                   title="NIFSEN office location"
-                  src="https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed"
+                  src={contact.mapEmbedUrl}
                   className="w-full aspect-video rounded-lg border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useSEO } from "@/hooks/useSEO";
 
 // Import goal images
 import goalDreamHome from "@/assets/goal-dream-home.png";
@@ -13,36 +14,49 @@ const goals = [
   {
     image: goalDreamHome,
     title: "Dream Home",
+    subtitle: "Plan the down payment without overstretching",
     href: "/goals/dream-home",
   },
   {
     image: goalEducation,
     title: "Child's Education",
+    subtitle: "Beat education-cost inflation with an early start",
     href: "/goals/education",
   },
   {
     image: goalRetirement,
     title: "Retirement",
+    subtitle: "Build an inflation-adjusted income for life",
     href: "/goals/retirement",
   },
   {
     image: goalEmergency,
     title: "Financial Emergency",
+    subtitle: "6–12 months of essentials, parked safely",
     href: "/goals/emergency",
   },
   {
     image: goalWedding,
     title: "Child's Wedding",
+    subtitle: "Celebrate without disturbing other goals",
     href: "/goals/marriage",
   },
   {
     image: goalWealthCreation,
     title: "Wealth Creation",
+    subtitle: "Long-term compounding, with a clear plan",
     href: "/goals/wealth",
   },
 ];
 
 const GoalsPage = () => {
+  useSEO({
+    title: "Goal-based Investment Planning",
+    description:
+      "Plan dedicated investment strategies for life goals — home, child's education, retirement, emergency fund, wedding, and long-term wealth creation.",
+    canonicalPath: "/goals",
+  });
+
   return (
     <>
       {/* Hero */}
@@ -101,8 +115,8 @@ const GoalsPage = () => {
                     
                     {/* Glass strip with title at bottom */}
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <div 
-                        className="inline-block px-5 py-3 rounded-xl backdrop-blur-md transition-all duration-300 group-hover:backdrop-blur-lg"
+                      <div
+                        className="inline-block px-5 py-3 rounded-xl backdrop-blur-md transition-all duration-300 group-hover:backdrop-blur-lg max-w-full"
                         style={{
                           background: 'hsla(var(--background), 0.7)',
                           border: '1px solid hsla(var(--accent), 0.2)',
@@ -112,6 +126,9 @@ const GoalsPage = () => {
                         <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
                           {goal.title}
                         </h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                          {goal.subtitle}
+                        </p>
                       </div>
                     </div>
                   </div>

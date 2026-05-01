@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Shield, Heart, Eye, BookOpen, Users, ArrowRight } from "lucide-react";
+import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import heroAboutBg from "@/assets/hero-about-bg.png";
+import { useSEO } from "@/hooks/useSEO";
 
 const values = [
   { icon: Shield, title: "Transparency", description: "Clear communication about our process, fees, and recommendations." },
@@ -12,6 +13,13 @@ const values = [
 ];
 
 const AboutPage = () => {
+  useSEO({
+    title: "About NIFSEN",
+    description:
+      "Why NIFSEN exists, our client-first philosophy, and the values that guide every recommendation we make.",
+    canonicalPath: "/about",
+  });
+
   return (
     <>
       {/* Hero - Cinematic Background */}
@@ -65,7 +73,7 @@ const AboutPage = () => {
                   Explore Our Services
                 </Link>
                 <Link to="/contact" className="btn-secondary">
-                  Meet Our Team
+                  Talk to Us
                 </Link>
               </div>
             </div>
@@ -155,56 +163,44 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Gallery - Reusing the same background with different positioning */}
-      <section 
-        id="gallery" 
+      {/* How we work with clients */}
+      <section
+        id="gallery"
         className="relative py-20 overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroAboutBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'bottom right',
-          backgroundRepeat: 'no-repeat',
-        }}
       >
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, hsl(var(--background) / 0.92) 0%, hsl(var(--background) / 0.85) 50%, hsl(var(--background) / 0.95) 100%)',
-          }}
-        />
-
         <div className="section-container relative z-10">
           <div className="text-center mb-12">
-            <h2 className="heading-lg mb-4">Gallery</h2>
+            <h2 className="heading-lg mb-4">How we work with clients</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Glimpses of how we work with our clients.
+              A simple, repeatable rhythm — from the first conversation to ongoing reviews.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Client Education & Awareness", description: "Regular workshops and sessions to help clients understand investment fundamentals." },
-              { title: "Research and Portfolio Review", description: "In-depth analysis sessions to ensure your portfolio stays aligned with goals." },
-              { title: "Goal Planning Sessions", description: "One-on-one consultations to map out your financial milestones." },
+              {
+                icon: Compass,
+                title: "Discovery & goal mapping",
+                description: "We start with a no-pressure conversation to understand your goals, time horizon, and comfort with risk before we recommend anything.",
+              },
+              {
+                icon: ClipboardCheck,
+                title: "Research & portfolio build",
+                description: "Funds and products are shortlisted using documented research — not the latest trend or what's paying the highest commission.",
+              },
+              {
+                icon: GraduationCap,
+                title: "Reviews & education",
+                description: "Quarterly check-ins to rebalance and explain what's changed, so you stay in control of your money instead of guessing.",
+              },
             ].map((item, index) => (
-              <GlassCard
-                key={item.title}
-                className="p-6 overflow-hidden"
-                hover
-              >
+              <GlassCard key={item.title} className="p-8" hover>
                 <div className="animate-fade-up" style={{ animationDelay: `${index * 0.15}s` }}>
-                  <div 
-                    className="aspect-video rounded-xl mb-6 relative overflow-hidden"
-                    style={{
-                      backgroundImage: `url(${heroAboutBg})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: index === 0 ? 'center' : index === 1 ? 'right center' : 'left center',
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                  <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-5">
+                    <item.icon className="w-7 h-7 text-accent" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
                 </div>
               </GlassCard>
             ))}

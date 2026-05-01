@@ -3,6 +3,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import nifsenLogo from "@/assets/nifsen-logo.png";
 import MarketTicker from "./MarketTicker";
+import { contact } from "@/config/contact";
 
 interface DropdownItem {
   label: string;
@@ -58,7 +59,7 @@ const navItems: NavItem[] = [
     ],
   },
   { label: "Contact Us", href: "/contact" },
-  { label: "Open Demat", href: "https://mosl.co/MOSWEB/kc1PWeQYgr", isExternal: true },
+  { label: "Open Demat", href: contact.openDematUrl, isExternal: true },
 ];
 
 const DropdownMenu = ({ items, isOpen }: { items: DropdownItem[]; isOpen: boolean }) => {
@@ -78,6 +79,7 @@ const DropdownMenu = ({ items, isOpen }: { items: DropdownItem[]; isOpen: boolea
 const NavItemComponent = ({ item }: { item: NavItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -88,19 +90,45 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
     timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setIsOpen(false);
+      return;
+    }
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+      if (e.key !== "Enter") e.preventDefault();
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [isOpen]);
+
   if (item.dropdown) {
     return (
       <div
         className="relative"
+        ref={containerRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onKeyDown={handleKeyDown}
       >
         <Link
           to={item.href}
-          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-200"
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md transition-colors duration-200"
         >
           {item.label}
-          <ChevronDown className="w-4 h-4" />
+          <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
         </Link>
         <DropdownMenu items={item.dropdown} isOpen={isOpen} />
       </div>
@@ -236,11 +264,12 @@ const Header = () => {
         <div className="section-container py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3">
-              <img src={nifsenLogo} alt="NIFSEN" className="h-12 w-auto brightness-110 contrast-110" />
-              <div className="hidden sm:block">
-                <div className="text-lg font-bold text-foreground">NIFSEN Investment Services Limited</div>
-                <div className="text-xs text-muted-foreground">Mutual Funds • Insurance • Wealth Management</div>
+            <Link to="/" aria-label={contact.companyName} className="flex items-center gap-3 min-w-0">
+              <img src={nifsenLogo} alt="NIFSEN" className="h-10 sm:h-12 w-auto brightness-110 contrast-110 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="hidden sm:block text-lg font-bold text-foreground">{contact.companyName}</div>
+                <div className="sm:hidden text-base font-bold text-foreground truncate">{contact.shortName}</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">{contact.tagline}</div>
               </div>
             </Link>
 

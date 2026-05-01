@@ -45,3 +45,4 @@ supabase/.temp/
 *.njsproj
 *.sln
 *.sw?
+.claude/

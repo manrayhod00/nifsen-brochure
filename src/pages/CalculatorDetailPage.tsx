@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Info } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
+import { useSEO } from "@/hooks/useSEO";
 
 type CalculatorType = "sip" | "compounding" | "retirement" | "emi";
 
@@ -198,9 +199,9 @@ const RetirementCalculator = () => {
   const [monthlyExpenses, setMonthlyExpenses] = useState(50000);
   const [expectedReturn, setExpectedReturn] = useState(12);
   const [inflation, setInflation] = useState(6);
+  const [yearsInRetirement, setYearsInRetirement] = useState(25);
 
   const yearsToRetirement = retirementAge - currentAge;
-  const yearsInRetirement = 25;
   const inflatedMonthlyExpenses = monthlyExpenses * Math.pow(1 + inflation / 100, yearsToRetirement);
   const retirementCorpus = inflatedMonthlyExpenses * 12 * yearsInRetirement;
   const monthlyRate = expectedReturn / 12 / 100;
@@ -242,7 +243,21 @@ const RetirementCalculator = () => {
 
         <div>
           <label className="block text-sm font-medium mb-2">
-            Monthly Expenses: {formatCurrency(monthlyExpenses)}
+            Years in Retirement: {yearsInRetirement} years
+          </label>
+          <input
+            type="range"
+            min="10"
+            max="40"
+            value={yearsInRetirement}
+            onChange={(e) => setYearsInRetirement(Number(e.target.value))}
+            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Monthly Expenses (today): {formatCurrency(monthlyExpenses)}
           </label>
           <input
             type="range"
@@ -251,6 +266,21 @@ const RetirementCalculator = () => {
             step="5000"
             value={monthlyExpenses}
             onChange={(e) => setMonthlyExpenses(Number(e.target.value))}
+            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-accent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Inflation: {inflation}% p.a.
+          </label>
+          <input
+            type="range"
+            min="2"
+            max="10"
+            step="0.5"
+            value={inflation}
+            onChange={(e) => setInflation(Number(e.target.value))}
             className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-accent"
           />
         </div>
@@ -277,6 +307,10 @@ const RetirementCalculator = () => {
           <div className="flex justify-between items-center pb-3 border-b border-border/30">
             <span className="text-muted-foreground">Years to Retirement</span>
             <span className="font-semibold">{yearsToRetirement} years</span>
+          </div>
+          <div className="flex justify-between items-center pb-3 border-b border-border/30">
+            <span className="text-muted-foreground">Monthly expenses at retirement</span>
+            <span className="font-semibold">{formatCurrency(inflatedMonthlyExpenses)}</span>
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-border/30">
             <span className="text-muted-foreground">Corpus Needed</span>
@@ -377,6 +411,12 @@ const EMICalculator = () => {
 const CalculatorDetailPage = () => {
   const { type } = useParams<{ type: CalculatorType }>();
   const config = calculatorConfig[type as CalculatorType];
+
+  useSEO({
+    title: config ? config.title : "Calculator",
+    description: config ? config.description : "Free financial calculators from NIFSEN.",
+    canonicalPath: `/calculators/${type ?? ""}`,
+  });
 
   if (!config) {
     return (

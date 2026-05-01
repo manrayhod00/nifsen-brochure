@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { TrendingUp, Shield, Target, RefreshCw, ArrowRight, CheckCircle } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
+import { useSEO } from "@/hooks/useSEO";
 
 const services = [
   {
@@ -10,10 +11,10 @@ const services = [
     description: "Research-backed fund selection aligned with your goals and risk profile.",
     whoFor: "Investors looking for professional guidance on mutual fund selection and portfolio construction.",
     howWeHelp: [
-      "Comprehensive risk profiling",
-      "Goal-based fund recommendations",
-      "Regular portfolio monitoring",
-      "Rebalancing suggestions",
+      "Risk-profiling questionnaire and a documented investment plan",
+      "Goal-tagged fund recommendations from our shortlist",
+      "Quarterly performance summary by email",
+      "Rebalancing suggestion when allocation drifts beyond your plan",
     ],
   },
   {
@@ -23,10 +24,10 @@ const services = [
     description: "Protection coverage that fits your life stage and family needs.",
     whoFor: "Individuals and families seeking adequate protection against life's uncertainties.",
     howWeHelp: [
-      "Life insurance needs analysis",
-      "Health insurance guidance",
-      "Term vs. traditional comparison",
-      "Claims assistance support",
+      "Coverage gap analysis based on your income and dependants",
+      "Honest preference for low-cost term and health cover over bundled products",
+      "Side-by-side comparison of recommended policies before you buy",
+      "Help with documentation at the time of a claim",
     ],
   },
   {
@@ -36,10 +37,10 @@ const services = [
     description: "Structured plans for life's important milestones — home, education, retirement, and more.",
     whoFor: "Anyone with specific financial goals and a desire for disciplined savings.",
     howWeHelp: [
-      "Goal quantification and timeline",
-      "Investment amount calculation",
-      "Product selection for each goal",
-      "Progress tracking",
+      "Goal quantification with a clear target amount and target date",
+      "Exact monthly contribution required to reach the goal on time",
+      "Goal-specific product mix (equity, debt, insurance, where appropriate)",
+      "Annual progress review against your plan",
     ],
   },
   {
@@ -49,15 +50,22 @@ const services = [
     description: "Regular portfolio health checks to keep you on track with your goals.",
     whoFor: "Existing investors who want professional oversight of their portfolios.",
     howWeHelp: [
-      "Quarterly performance reviews",
-      "Market-based rebalancing",
-      "Fund replacement recommendations",
-      "Consolidated reporting",
+      "Quarterly portfolio review with a written summary",
+      "Rebalancing recommendation when allocation drifts beyond an agreed band",
+      "Fund replacement when an existing scheme stops meeting our research criteria",
+      "Single consolidated statement covering all your investments with us",
     ],
   },
 ];
 
 const ServicesPage = () => {
+  useSEO({
+    title: "Services — Mutual Funds, Insurance, Goal Planning",
+    description:
+      "Mutual fund advisory, insurance planning, goal-based investing, and quarterly portfolio reviews from NIFSEN Investment Services Limited.",
+    canonicalPath: "/services",
+  });
+
   return (
     <>
       {/* Hero */}

@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Clock, ArrowRight, RefreshCw, ExternalLink } from "lucide-react";
+import { ArrowRight, RefreshCw, ExternalLink, AlertCircle } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import { blogPosts } from "@/data/blogContent";
 import { useStockNews } from "@/hooks/useStockNews";
 import { Button } from "@/components/ui/button";
+import { useSEO } from "@/hooks/useSEO";
 
 const KnowledgePage = () => {
+  useSEO({
+    title: "Knowledge Hub — Blogs & Market News",
+    description:
+      "Educational blog posts on SIPs, asset allocation, tax planning, and live Indian market news from NIFSEN.",
+    canonicalPath: "/knowledge",
+  });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get("tab") || "blogs";
-  const { news, isLoading, lastUpdated, refetch } = useStockNews();
+  const { news, isLoading, lastUpdated, refetch, error: newsError } = useStockNews();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleTabChange = (tab: string) => {
@@ -132,6 +140,17 @@ const KnowledgePage = () => {
           {/* News List */}
           {activeTab === "news" && (
             <div className="space-y-4">
+              {newsError && !isLoading && (
+                <GlassCard className="p-4 border-amber-500/30 bg-amber-500/5" hover={false}>
+                  <div className="flex items-start gap-3 text-sm">
+                    <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-muted-foreground">
+                      Live market news is temporarily unavailable. Showing cached headlines —
+                      these may be a few days old.
+                    </p>
+                  </div>
+                </GlassCard>
+              )}
               {isLoading ? (
                 // Loading skeleton
                 Array.from({ length: 5 }).map((_, index) => (
