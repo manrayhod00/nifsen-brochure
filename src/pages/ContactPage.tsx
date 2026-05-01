@@ -221,7 +221,7 @@ const ContactPage = () => {
               <GlassCard className="p-2 overflow-hidden" hover={false}>
                 <iframe
                   title="NIFSEN office location"
-                  src="https://www.google.com/maps?q=Kakateeya+Residency+Apartment,+Kappagal+Road,+Ballari,+583101&output=embed"
+                  src="https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed"
                   className="w-full aspect-video rounded-lg border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
