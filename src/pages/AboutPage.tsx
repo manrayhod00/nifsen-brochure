@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin } from "lucide-react";
+import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin, Phone, User } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import heroAboutBg from "@/assets/hero-about-bg.png";
 import { useSEO } from "@/hooks/useSEO";
@@ -226,7 +226,7 @@ const AboutPage = () => {
                   <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-6 h-6 text-accent" />
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <h3 className="font-semibold">{branch.city}</h3>
                       {branch.isHeadOffice && (
@@ -244,6 +244,26 @@ const AboutPage = () => {
                       ))}
                       {branch.pincode}, {branch.state}
                     </p>
+                    <div className="mt-3 pt-3 border-t border-border/30 space-y-1.5 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                        <a
+                          href={`tel:${branch.phone}`}
+                          className="text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          {branch.phoneDisplay}
+                        </a>
+                      </div>
+                      {branch.manager && (
+                        <div className="flex items-center gap-2">
+                          <User className="w-4 h-4 text-accent flex-shrink-0" />
+                          <span className="text-muted-foreground text-xs">
+                            {branch.manager.role ?? "Branch Manager"}: {" "}
+                            <span className="text-foreground/90">{branch.manager.name}</span>
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </GlassCard>

@@ -6,7 +6,18 @@ export interface Branch {
   pincode: string;
   state: string;
   mapEmbedUrl: string;
+  phone: string;          // raw, with +91 country code, no spaces (used in tel: links)
+  phoneDisplay: string;   // formatted for display
+  manager?: {
+    name: string;
+    role?: string;        // defaults to "Branch Manager"
+  };
 }
+
+const formatIndianPhone = (raw: string) => {
+  const digits = raw.replace(/\D/g, "").slice(-10);
+  return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
+};
 
 export const branches: Branch[] = [
   {
@@ -20,6 +31,8 @@ export const branches: Branch[] = [
     pincode: "583101",
     state: "Karnataka",
     mapEmbedUrl: "https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed",
+    phone: "+918088071633",
+    phoneDisplay: formatIndianPhone("8088071633"),
   },
   {
     id: "bidar",
@@ -32,6 +45,9 @@ export const branches: Branch[] = [
     pincode: "585401",
     state: "Karnataka",
     mapEmbedUrl: "https://www.google.com/maps?q=17.920013,77.514402&z=17&output=embed",
+    phone: "+919189228691",
+    phoneDisplay: formatIndianPhone("9189228691"),
+    manager: { name: "Siddharth Verma" },
   },
   {
     id: "gangavathi",
@@ -44,6 +60,9 @@ export const branches: Branch[] = [
     pincode: "583227",
     state: "Karnataka",
     mapEmbedUrl: "https://www.google.com/maps?q=15.432166,76.530835&z=17&output=embed",
+    phone: "+918762358781",
+    phoneDisplay: formatIndianPhone("8762358781"),
+    manager: { name: "Yousuf MD" },
   },
 ];
 

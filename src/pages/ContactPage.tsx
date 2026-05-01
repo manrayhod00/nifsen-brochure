@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, MessageCircle, Send, Loader2 } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, Loader2, User } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,7 +21,7 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
       <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
         <MapPin className="w-6 h-6 text-accent" />
       </div>
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-2">
           <h3 className="font-semibold">{branch.city}</h3>
           {branch.isHeadOffice && (
@@ -39,6 +39,26 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
           ))}
           {branch.pincode}, {branch.state}
         </p>
+        <div className="mt-3 pt-3 border-t border-border/30 space-y-1.5 text-sm">
+          <div className="flex items-center gap-2">
+            <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+            <a
+              href={`tel:${branch.phone}`}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {branch.phoneDisplay}
+            </a>
+          </div>
+          {branch.manager && (
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4 text-accent flex-shrink-0" />
+              <span className="text-muted-foreground">
+                {branch.manager.role ?? "Branch Manager"}: {" "}
+                <span className="text-foreground/90">{branch.manager.name}</span>
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   </GlassCard>
