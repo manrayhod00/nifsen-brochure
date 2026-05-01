@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ArrowRight, RefreshCw, ExternalLink, AlertCircle } from "lucide-react";
+import { Clock, ArrowRight, RefreshCw, ExternalLink, AlertCircle } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import { blogPosts } from "@/data/blogContent";
 import { useStockNews } from "@/hooks/useStockNews";
