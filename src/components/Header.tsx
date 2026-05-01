@@ -50,14 +50,7 @@ const navItems: NavItem[] = [
       { label: "Wealth Creation", href: "/goals/wealth" },
     ],
   },
-  {
-    label: "Knowledge",
-    href: "/knowledge",
-    dropdown: [
-      { label: "Blogs", href: "/knowledge?tab=blogs" },
-      { label: "News", href: "/knowledge?tab=news" },
-    ],
-  },
+  { label: "Knowledge", href: "/knowledge" },
   { label: "Contact Us", href: "/contact" },
   { label: "Open Demat", href: contact.openDematUrl, isExternal: true },
 ];
