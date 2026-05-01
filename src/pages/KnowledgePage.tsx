@@ -149,18 +149,22 @@ const KnowledgePage = () => {
                   </GlassCard>
                 ))
               ) : (
-                news.map((item, index) => (
+                news.map((item, index) => {
+                  const Wrapper = item.link ? "a" : "div";
+                  const wrapperProps = item.link
+                    ? {
+                        href: item.link,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      }
+                    : {};
+                  return (
                   <GlassCard
                     key={`${item.title}-${index}`}
-                    className="p-6 group cursor-pointer"
-                    hover
+                    className={`p-6 group ${item.link ? "cursor-pointer" : ""}`}
+                    hover={!!item.link}
                   >
-                    <a
-                      href={item.link || "#"}
-                      target={item.link ? "_blank" : undefined}
-                      rel={item.link ? "noopener noreferrer" : undefined}
-                      className="block"
-                    >
+                    <Wrapper {...wrapperProps} className="block">
                       <div
                         className="animate-fade-up flex flex-col sm:flex-row sm:items-center gap-4"
                         style={{ animationDelay: `${index * 0.1}s` }}
@@ -183,9 +187,10 @@ const KnowledgePage = () => {
                           </span>
                         </div>
                       </div>
-                    </a>
+                    </Wrapper>
                   </GlassCard>
-                ))
+                  );
+                })
               )}
 
               {/* Auto-refresh notice */}

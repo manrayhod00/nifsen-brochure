@@ -88,8 +88,8 @@ const fetchWithProxy = async (url: string, source: string): Promise<NewsItem[]> 
         const text = await response.text();
         return parseRSSFeed(text, source);
       }
-    } catch (error) {
-      console.log(`Proxy ${proxy} failed for ${source}`);
+    } catch {
+      // try next proxy
     }
   }
   return [];
@@ -172,12 +172,9 @@ export const useStockNews = (refreshInterval = 10 * 60 * 1000) => {
 
         setNews(uniqueNews.slice(0, 10));
       } else {
-        // Use fallback if all feeds fail
-        console.log("Using fallback news data");
         setNews(fallbackNews);
       }
-    } catch (err) {
-      console.error("Error fetching news:", err);
+    } catch {
       setNews(fallbackNews);
       setError("Using cached news data");
     } finally {

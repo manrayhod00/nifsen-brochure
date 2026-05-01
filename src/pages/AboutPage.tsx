@@ -56,7 +56,7 @@ const AboutPage = () => {
 
               {/* Subtext */}
               <p className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0">
-                NIFSEN Financial Services was founded with a simple belief: financial planning should be goal-first, transparent, and accessible to everyone.
+                NIFSEN Investment Services Limited was founded with a simple belief: financial planning should be goal-first, transparent, and accessible to everyone.
               </p>
 
               {/* CTAs */}

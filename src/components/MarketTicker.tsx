@@ -13,26 +13,17 @@ interface MarketData {
 }
 
 const fetchMarketData = async (): Promise<MarketData[]> => {
-  try {
-    console.log("Fetching live market data from backend...");
-    
-    const { data, error } = await supabase.functions.invoke("market-data");
-    
-    if (error) {
-      console.error("Edge function error:", error);
-      throw new Error(error.message);
-    }
-    
-    if (data?.success && data?.data) {
-      console.log("Live market data received:", data.data.length, "quotes");
-      return data.data;
-    }
-    
-    throw new Error(data?.error || "Failed to fetch market data");
-  } catch (error) {
-    console.error("Error fetching market data:", error);
-    throw error;
+  const { data, error } = await supabase.functions.invoke("market-data");
+
+  if (error) {
+    throw new Error(error.message);
   }
+
+  if (data?.success && data?.data) {
+    return data.data;
+  }
+
+  throw new Error(data?.error || "Failed to fetch market data");
 };
 
 const MarketItem = ({ data }: { data: MarketData }) => {
@@ -90,8 +81,7 @@ const MarketTicker = () => {
       const data = await fetchMarketData();
       setMarketData(data);
       setLastUpdated(new Date());
-    } catch (err) {
-      console.error("Failed to update market data:", err);
+    } catch {
       setError("Failed to load market data");
     } finally {
       setIsLoading(false);

@@ -35,7 +35,7 @@ const ContactPage = () => {
     }, 1000);
   };
 
-  const whatsappUrl = `https://wa.me/919XXXXXXXXX?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/918088071633?text=${encodeURIComponent(
     "Hello, I would like to schedule a consultation."
   )}`;
 
@@ -217,9 +217,16 @@ const ContactPage = () => {
                 </GlassCard>
               </a>
 
-              {/* Map Placeholder */}
-              <GlassCard className="p-6 aspect-video flex items-center justify-center" hover={false}>
-                <span className="text-muted-foreground">Map placeholder</span>
+              {/* Office Location Map */}
+              <GlassCard className="p-2 overflow-hidden" hover={false}>
+                <iframe
+                  title="NIFSEN office location"
+                  src="https://www.google.com/maps?q=Kakateeya+Residency+Apartment,+Kappagal+Road,+Ballari,+583101&output=embed"
+                  className="w-full aspect-video rounded-lg border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
               </GlassCard>
             </div>
           </div>
