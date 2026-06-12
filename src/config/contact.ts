@@ -78,7 +78,7 @@ export const contact = {
   whatsappMessage: "Hello, I would like to know more about NIFSEN Investment Services Limited.",
   whatsappConsultMessage: "Hello, I would like to schedule a consultation.",
   openDematUrl: "https://mosl.co/MOSWEB/kc1PWeQYgr",
-  arn: "253725",
+  arn: "XXXXXXXXX",
 } as const;
 
 export const whatsappLink = (msg: string = contact.whatsappMessage) =>
