@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin, Phone, User } from "lucide-react";
+import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin, Phone, User, BadgeCheck, Landmark, Fingerprint, IndianRupee, CalendarCheck, Building2 } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import heroAboutBg from "@/assets/hero-about-bg.png";
 import { useSEO } from "@/hooks/useSEO";
-import { branches } from "@/config/contact";
+import { branches, contact } from "@/config/contact";
 
 const values = [
   { icon: Shield, title: "Transparency", description: "Clear communication about our process, fees, and recommendations." },
@@ -122,6 +122,56 @@ const AboutPage = () => {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Corporate Information - Regulatory identifiers */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="section-container relative z-10">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 border border-accent/30 backdrop-blur-sm mb-4">
+              <BadgeCheck className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium text-foreground/90">ISIN activated · Securities-ready</span>
+            </div>
+            <h2 className="heading-lg mb-4">Corporate Information</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              NIFSEN Investment Services Limited is a registered public limited company with a securities ISIN
+              activated with the depositories — a milestone in our journey toward transparent, listed-grade governance.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Fingerprint, label: "ISIN", value: contact.isin, hint: "International Securities Identification Number" },
+              { icon: Landmark, label: "CIN", value: contact.cin, hint: "Corporate Identification Number" },
+              { icon: CalendarCheck, label: "ISIN Activation Date", value: contact.isinActivationDate, hint: "Activated with depositories" },
+              { icon: IndianRupee, label: "Face Value", value: contact.faceValue, hint: "Per share" },
+              { icon: Building2, label: "Registrar & Transfer Agent", value: contact.rta, hint: "RTA", wide: true },
+            ].map((item) => (
+              <GlassCard
+                key={item.label}
+                className={`p-6 ${item.wide ? "sm:col-span-2 lg:col-span-1" : ""}`}
+                hover={false}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-5 h-5 text-accent" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+                      {item.label}
+                    </div>
+                    <div className="font-semibold text-foreground break-words leading-snug">{item.value}</div>
+                    <div className="text-[11px] text-muted-foreground/80 mt-1">{item.hint}</div>
+                  </div>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+
+          <p className="text-center text-xs text-muted-foreground/70 mt-8 max-w-2xl mx-auto">
+            Issuer: NIFSEN Investment Services Limited · ISIN {contact.isin} · CIN {contact.cin}
+          </p>
         </div>
       </section>
 

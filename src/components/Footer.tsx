@@ -139,6 +139,8 @@ const Footer = () => {
           {/* Regulatory */}
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground mb-4">
             <span>AMFI-registered Mutual Fund Distributor — ARN: {contact.arn}</span>
+            <span>CIN: {contact.cin}</span>
+            <span>ISIN: {contact.isin}</span>
             {/* TODO: replace with the actual SEBI RIA / RA registration number once issued */}
           </div>
 
