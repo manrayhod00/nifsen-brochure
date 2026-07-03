@@ -79,6 +79,12 @@ export const contact = {
   whatsappConsultMessage: "Hello, I would like to schedule a consultation.",
   openDematUrl: "https://mosl.co/MOSWEB/kc1PWeQYgr",
   arn: "XXXXXXXXX",
+  // Corporate identifiers
+  cin: "U66190KA2026PLC218664",
+  isin: "INE2XK601013",
+  isinActivationDate: "03 Jul 2026",
+  faceValue: "₹10",
+  rta: "Integrated Registry Management Services Private Limited",
 } as const;
 
 export const whatsappLink = (msg: string = contact.whatsappMessage) =>
