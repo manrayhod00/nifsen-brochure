@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin, Phone, User, BadgeCheck, Landmark, Fingerprint, IndianRupee, CalendarCheck, Building2 } from "lucide-react";
+import { Shield, Heart, Eye, BookOpen, Users, ArrowRight, GraduationCap, ClipboardCheck, Compass, MapPin, Phone, User, BadgeCheck, Landmark, Fingerprint } from "lucide-react";
 import GlassCard from "@/components/GlassCard";
 import heroAboutBg from "@/assets/hero-about-bg.png";
 import { useSEO } from "@/hooks/useSEO";
@@ -140,17 +140,14 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="max-w-2xl mx-auto grid sm:grid-cols-2 gap-6">
             {[
               { icon: Fingerprint, label: "ISIN", value: contact.isin, hint: "International Securities Identification Number" },
               { icon: Landmark, label: "CIN", value: contact.cin, hint: "Corporate Identification Number" },
-              { icon: CalendarCheck, label: "ISIN Activation Date", value: contact.isinActivationDate, hint: "Activated with depositories" },
-              { icon: IndianRupee, label: "Face Value", value: contact.faceValue, hint: "Per share" },
-              { icon: Building2, label: "Registrar & Transfer Agent", value: contact.rta, hint: "RTA", wide: true },
             ].map((item) => (
               <GlassCard
                 key={item.label}
-                className={`p-6 ${item.wide ? "sm:col-span-2 lg:col-span-1" : ""}`}
+                className="p-6"
                 hover={false}
               >
                 <div className="flex items-start gap-4">
