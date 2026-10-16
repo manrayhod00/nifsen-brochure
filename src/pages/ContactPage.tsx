@@ -29,6 +29,11 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
               Head Office
             </span>
           )}
+          {branch.isRegionalOffice && (
+            <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+              Regional Office
+            </span>
+          )}
         </div>
         <p className="text-muted-foreground text-sm leading-relaxed">
           {branch.addressLines.map((line, i) => (
@@ -40,15 +45,17 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
           {branch.pincode}, {branch.state}
         </p>
         <div className="mt-3 pt-3 border-t border-border/30 space-y-1.5 text-sm">
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-accent flex-shrink-0" />
-            <a
-              href={`tel:${branch.phone}`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {branch.phoneDisplay}
-            </a>
-          </div>
+          {branch.phone && (
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+              <a
+                href={`tel:${branch.phone}`}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {branch.phoneDisplay}
+              </a>
+            </div>
+          )}
           {branch.manager && (
             <div className="flex items-center gap-2">
               <User className="w-4 h-4 text-accent flex-shrink-0" />
@@ -66,8 +73,8 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
 
 const ContactPage = () => {
   useSEO({
-    title: "Contact Us — Ballari, Bidar & Gangavathi",
-    description: `Talk to ${contact.companyName}. Offices in Ballari (Head Office), Bidar, and Gangavathi, Karnataka.`,
+    title: "Contact Us — Ballari, Hyderabad, Bidar & Gangavathi",
+    description: `Talk to ${contact.companyName}. Offices in Ballari (Head Office), Hyderabad (Regional Office), Bidar, and Gangavathi.`,
     canonicalPath: "/contact",
   });
 
@@ -150,7 +157,7 @@ const ContactPage = () => {
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
               Have questions? Want to discuss your financial goals? We're here to help — across our
-              offices in Ballari, Bidar, and Gangavathi.
+              offices in Ballari, Hyderabad, Bidar, and Gangavathi.
             </p>
           </div>
         </div>
@@ -338,6 +345,7 @@ const ContactPage = () => {
                       >
                         {branch.city}
                         {branch.isHeadOffice && " · HO"}
+                        {branch.isRegionalOffice && " · RO"}
                       </button>
                     );
                   })}

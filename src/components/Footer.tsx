@@ -91,6 +91,9 @@ const Footer = () => {
                         {branch.isHeadOffice && (
                           <span className="ml-1 text-accent normal-case font-medium">(Head Office)</span>
                         )}
+                        {branch.isRegionalOffice && (
+                          <span className="ml-1 text-accent normal-case font-medium">(Regional Office)</span>
+                        )}
                       </span>
                       <span className="block text-xs">
                         {branch.addressLines.map((line, i) => (
@@ -101,12 +104,14 @@ const Footer = () => {
                         ))}
                         {branch.pincode}, {branch.state}
                       </span>
-                      <a
-                        href={`tel:${branch.phone}`}
-                        className="block text-xs text-foreground/80 hover:text-foreground transition-colors mt-1"
-                      >
-                        {branch.phoneDisplay}
-                      </a>
+                      {branch.phone && (
+                        <a
+                          href={`tel:${branch.phone}`}
+                          className="block text-xs text-foreground/80 hover:text-foreground transition-colors mt-1"
+                        >
+                          {branch.phoneDisplay}
+                        </a>
+                      )}
                       {branch.manager && (
                         <span className="block text-[11px] text-muted-foreground/80">
                           {branch.manager.role ?? "Branch Manager"}: {branch.manager.name}

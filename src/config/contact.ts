@@ -1,13 +1,14 @@
 export interface Branch {
-  id: "bellary" | "bidar" | "gangavathi";
+  id: "bellary" | "hyderabad" | "bidar" | "gangavathi";
   city: string;
   isHeadOffice?: boolean;
+  isRegionalOffice?: boolean;
   addressLines: string[];
   pincode: string;
   state: string;
   mapEmbedUrl: string;
-  phone: string;          // raw, with +91 country code, no spaces (used in tel: links)
-  phoneDisplay: string;   // formatted for display
+  phone?: string;         // raw, with +91 country code, no spaces (used in tel: links)
+  phoneDisplay?: string;  // formatted for display
   manager?: {
     name: string;
     role?: string;        // defaults to "Branch Manager"
@@ -33,6 +34,22 @@ export const branches: Branch[] = [
     mapEmbedUrl: "https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed",
     phone: "+918088071633",
     phoneDisplay: formatIndianPhone("8088071633"),
+  },
+  {
+    id: "hyderabad",
+    city: "Hyderabad",
+    isRegionalOffice: true,
+    addressLines: [
+      "4th Floor, Sai Mithra Elantra,",
+      "H.No. 2-22/3/401, DD Colony,",
+      "Amberpet,",
+    ],
+    pincode: "500013",
+    state: "Telangana",
+    mapEmbedUrl: "https://www.google.com/maps?q=17.396262,78.512019&z=17&output=embed",
+    phone: "+918123938585",
+    phoneDisplay: formatIndianPhone("8123938585"),
+    manager: { name: "Mr. S. Raghavendra Prasad", role: "Regional Manager" },
   },
   {
     id: "bidar",

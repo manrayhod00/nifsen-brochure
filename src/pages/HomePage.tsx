@@ -321,13 +321,13 @@ const OfficesSection = () => (
   <section className="py-20">
     <div className="section-container">
       <ScrollReveal className="text-center mb-12">
-        <h2 className="heading-lg mb-4">Find us across Karnataka</h2>
+        <h2 className="heading-lg mb-4">Find us across Karnataka &amp; Telangana</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Three offices serving clients across north and central Karnataka.
+          Four offices serving clients across Karnataka and Telangana.
         </p>
       </ScrollReveal>
 
-      <div className="grid sm:grid-cols-3 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {branches.map((branch, index) => (
           <ScrollReveal key={branch.id} delay={index * 0.1}>
             <Link to="/contact#branches" className="block h-full">
@@ -338,9 +338,9 @@ const OfficesSection = () => (
                 <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">
                   {branch.city}
                 </h3>
-                {branch.isHeadOffice ? (
+                {branch.isHeadOffice || branch.isRegionalOffice ? (
                   <span className="inline-block mt-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
-                    Head Office
+                    {branch.isHeadOffice ? "Head Office" : "Regional Office"}
                   </span>
                 ) : (
                   <span className="inline-block mt-2 text-xs text-muted-foreground">Branch office</span>

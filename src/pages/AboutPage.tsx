@@ -262,11 +262,11 @@ const AboutPage = () => {
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-4">Where to find us</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Three offices across Karnataka — drop in at the one closest to you.
+              Four offices across Karnataka and Telangana — drop in at the one closest to you.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {branches.map((branch) => (
               <GlassCard key={branch.id} className="p-6 h-full" hover={false}>
                 <div className="flex items-start gap-4">
@@ -281,6 +281,11 @@ const AboutPage = () => {
                           Head Office
                         </span>
                       )}
+                      {branch.isRegionalOffice && (
+                        <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+                          Regional Office
+                        </span>
+                      )}
                     </div>
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {branch.addressLines.map((line, i) => (
@@ -292,15 +297,17 @@ const AboutPage = () => {
                       {branch.pincode}, {branch.state}
                     </p>
                     <div className="mt-3 pt-3 border-t border-border/30 space-y-1.5 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-accent flex-shrink-0" />
-                        <a
-                          href={`tel:${branch.phone}`}
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          {branch.phoneDisplay}
-                        </a>
-                      </div>
+                      {branch.phone && (
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                          <a
+                            href={`tel:${branch.phone}`}
+                            className="text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {branch.phoneDisplay}
+                          </a>
+                        </div>
+                      )}
                       {branch.manager && (
                         <div className="flex items-center gap-2">
                           <User className="w-4 h-4 text-accent flex-shrink-0" />
