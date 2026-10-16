@@ -135,7 +135,7 @@ const MarketTicker = () => {
         <div className="absolute left-0 top-0 bottom-0 z-10 flex items-center pl-3 bg-gradient-to-r from-background-secondary via-background-secondary to-transparent pr-8">
           <div className="flex items-center gap-2">
             <span className="text-xs font-medium text-muted-foreground hidden sm:inline">
-              NSE: 9:15 AM - 3:30 PM
+              NSE: 9:15 AM to 3:30 PM
             </span>
             <span className="text-xs font-medium text-muted-foreground sm:hidden">
               NSE

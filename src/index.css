@@ -292,3 +292,409 @@
     text-wrap: balance;
   }
 }
+
+/* ==========================================================================
+   Modern motion layer
+   Everything below runs continuously (ambient) or responds to the pointer.
+   All of it is switched off for visitors who ask for reduced motion.
+   ========================================================================== */
+
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ---- Ambient aurora background ---- */
+.aurora {
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px) saturate(140%);
+  opacity: 0.55;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.aurora-blob-1 {
+  width: 46vw;
+  height: 46vw;
+  left: 5%;
+  top: 0%;
+  background: radial-gradient(circle, hsla(262, 83%, 58%, 0.55) 0%, transparent 65%);
+  animation: aurora-drift-1 26s ease-in-out infinite;
+}
+
+.aurora-blob-2 {
+  width: 38vw;
+  height: 38vw;
+  right: 4%;
+  top: 30%;
+  background: radial-gradient(circle, hsla(40, 80%, 55%, 0.35) 0%, transparent 65%);
+  animation: aurora-drift-2 32s ease-in-out infinite;
+}
+
+.aurora-blob-3 {
+  width: 50vw;
+  height: 50vw;
+  left: 25%;
+  bottom: -5%;
+  background: radial-gradient(circle, hsla(285, 70%, 45%, 0.45) 0%, transparent 65%);
+  animation: aurora-drift-3 38s ease-in-out infinite;
+}
+
+.aurora-blob-4 {
+  width: 28vw;
+  height: 28vw;
+  left: 55%;
+  top: 5%;
+  background: radial-gradient(circle, hsla(220, 80%, 55%, 0.25) 0%, transparent 65%);
+  animation: aurora-drift-2 44s ease-in-out infinite reverse;
+}
+
+@keyframes aurora-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(18vw, 10vh) scale(1.15); }
+  66% { transform: translate(6vw, 28vh) scale(0.9); }
+}
+
+@keyframes aurora-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-22vw, -12vh) scale(1.2); }
+}
+
+@keyframes aurora-drift-3 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  40% { transform: translate(-12vw, -18vh) rotate(25deg) scale(1.1); }
+  70% { transform: translate(14vw, -6vh) rotate(-15deg) scale(0.95); }
+}
+
+/* ---- Twinkling star field ---- */
+.starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, hsla(40, 80%, 85%, 0.9), transparent 60%),
+    radial-gradient(1px 1px at 72% 12%, hsla(0, 0%, 100%, 0.8), transparent 60%),
+    radial-gradient(1.5px 1.5px at 38% 62%, hsla(40, 80%, 75%, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 88% 48%, hsla(262, 80%, 85%, 0.9), transparent 60%),
+    radial-gradient(1px 1px at 22% 82%, hsla(0, 0%, 100%, 0.6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 58% 32%, hsla(262, 80%, 85%, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 92% 86%, hsla(40, 80%, 85%, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 5% 50%, hsla(0, 0%, 100%, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 48% 92%, hsla(262, 80%, 85%, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 66% 74%, hsla(0, 0%, 100%, 0.5), transparent 60%);
+  animation: twinkle 7s ease-in-out infinite alternate;
+}
+
+.starfield-2 {
+  background-position: 30% 40%;
+  transform: scale(1.4) rotate(12deg);
+  animation-duration: 11s;
+  animation-delay: -4s;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.25; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.35; }
+}
+
+/* Faint perspective grid that drifts upwards under the hero */
+.grid-floor {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  pointer-events: none;
+  background-image:
+    linear-gradient(hsla(262, 70%, 70%, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, hsla(262, 70%, 70%, 0.12) 1px, transparent 1px);
+  background-size: 56px 56px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: bottom;
+  mask-image: linear-gradient(to top, black 0%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to top, black 0%, transparent 85%);
+  animation: grid-scroll 6s linear infinite;
+}
+
+@keyframes grid-scroll {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 56px, 0 0; }
+}
+
+/* ---- Living gold text: a slow shine that never stops ---- */
+.text-shimmer-gold {
+  background: linear-gradient(
+    110deg,
+    hsl(38, 65%, 45%) 0%,
+    hsl(45, 85%, 62%) 25%,
+    hsl(48, 100%, 85%) 50%,
+    hsl(45, 85%, 62%) 75%,
+    hsl(38, 65%, 45%) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shine 5s linear infinite;
+}
+
+.text-shimmer-primary {
+  background: linear-gradient(
+    110deg,
+    hsl(262, 83%, 68%) 0%,
+    hsl(285, 80%, 72%) 30%,
+    hsl(45, 85%, 65%) 50%,
+    hsl(285, 80%, 72%) 70%,
+    hsl(262, 83%, 68%) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shine 7s linear infinite;
+}
+
+@keyframes text-shine {
+  from { background-position: 250% 0; }
+  to { background-position: -250% 0; }
+}
+
+/* ---- Buttons: continuous light sweep + glow ---- */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, hsla(0, 0%, 100%, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: btn-sweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, hsla(0, 0%, 100%, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: btn-sweep 3.6s ease-in-out infinite;
+  animation-delay: 1.2s;
+  pointer-events: none;
+}
+
+@keyframes btn-sweep {
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+.btn-secondary {
+  position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ---- Glass cards: pointer spotlight and glowing edge ---- */
+.glass-card {
+  --mx: 50%;
+  --my: 50%;
+  --spot: 0;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--spot);
+  transition: opacity 0.35s ease;
+  background:
+    radial-gradient(420px circle at var(--mx) var(--my), hsla(262, 90%, 70%, 0.18), transparent 45%),
+    radial-gradient(240px circle at var(--mx) var(--my), hsla(45, 90%, 65%, 0.12), transparent 40%);
+}
+
+/* Edge light that follows the pointer (masked to a 1px ring) */
+.glass-edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: var(--spot);
+  transition: opacity 0.35s ease;
+  background: radial-gradient(260px circle at var(--mx) var(--my), hsla(45, 95%, 70%, 0.9), hsla(262, 90%, 70%, 0.5) 40%, transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  z-index: 2;
+}
+
+/* Rotating conic border for featured blocks */
+.border-spin {
+  position: relative;
+  isolation: isolate;
+}
+
+.border-spin::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    hsla(262, 90%, 65%, 0.9) 60deg,
+    hsla(45, 95%, 65%, 1) 120deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: border-rotate 6s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes border-rotate {
+  to { --border-angle: 360deg; }
+}
+
+/* ---- Icon tiles: soft breathing glow ---- */
+.icon-orb {
+  position: relative;
+  isolation: isolate;
+}
+
+.icon-orb::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(circle, hsla(262, 85%, 60%, 0.45), transparent 70%);
+  z-index: -1;
+  animation: orb-breathe 4s ease-in-out infinite;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+
+/* Gentle hover float used on decorative items */
+.float-slow { animation: float-y 6s ease-in-out infinite; }
+.float-slower { animation: float-y 9s ease-in-out infinite; animation-delay: -3s; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* Location ping */
+.ping-dot {
+  position: relative;
+}
+
+.ping-dot::before,
+.ping-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid hsla(45, 90%, 60%, 0.6);
+  animation: ping-ring 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.ping-dot::after {
+  animation-delay: 1.3s;
+}
+
+@keyframes ping-ring {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+/* ---- Infinite marquee ---- */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* Slow cinematic zoom on hero art */
+.ken-burns {
+  animation: ken-burns 28s ease-in-out infinite alternate;
+  transform-origin: 70% 50%;
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.14); }
+}
+
+/* Eyebrow chip above section headings */
+.eyebrow {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em];
+  color: hsl(var(--gold-light));
+  background: hsla(262, 60%, 40%, 0.18);
+  border: 1px solid hsla(45, 80%, 60%, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+/* Pause everything when the tab is hidden (set by Layout) */
+html.motion-paused *,
+html.motion-paused *::before,
+html.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora,
+  .starfield,
+  .grid-floor {
+    animation: none !important;
+  }
+}
