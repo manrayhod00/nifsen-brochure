@@ -49,7 +49,7 @@ export const branches: Branch[] = [
     mapEmbedUrl: "https://www.google.com/maps?q=17.396262,78.512019&z=17&output=embed",
     phone: "+918123938585",
     phoneDisplay: formatIndianPhone("8123938585"),
-    manager: { name: "Mr. S. Raghavendra Prasad", role: "Regional Manager" },
+    manager: { name: "Mr. S. Raghavendra Prasad" },
   },
   {
     id: "bidar",
