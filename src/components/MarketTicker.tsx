@@ -99,7 +99,7 @@ const MarketTicker = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
+      <div className="bg-background-secondary/90 border-b border-border/30 overflow-hidden">
         <div className="section-container py-2">
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
             <RefreshCw className="w-3 h-3 animate-spin" />
@@ -112,7 +112,7 @@ const MarketTicker = () => {
 
   if (error || marketData.length === 0) {
     return (
-      <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
+      <div className="bg-background-secondary/90 border-b border-border/30 overflow-hidden">
         <div className="section-container py-2">
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
             <span>{error || "Market data unavailable"}</span>
@@ -129,7 +129,7 @@ const MarketTicker = () => {
   }
 
   return (
-    <div className="bg-background-secondary/90 backdrop-blur-sm border-b border-border/30 overflow-hidden">
+    <div className="bg-background-secondary/90 border-b border-border/30 overflow-hidden">
       <div className="relative">
         {/* Market Hours Badge */}
         <div className="absolute left-0 top-0 bottom-0 z-10 flex items-center pl-3 bg-gradient-to-r from-background-secondary via-background-secondary to-transparent pr-8">

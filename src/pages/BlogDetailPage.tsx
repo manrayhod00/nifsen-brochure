@@ -399,7 +399,7 @@ const ArticleView = ({ blog }: { blog: BlogPost }) => {
             <motion.button
               type="button"
               onClick={() => navigate(-1)}
-              className="group inline-flex items-center gap-2 rounded-full border border-primary/25 bg-background/30 backdrop-blur-md px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-accent/40 transition-colors mb-10"
+              className="group inline-flex items-center gap-2 rounded-full border border-primary/25 bg-background/30 px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-accent/40 transition-colors mb-10"
               initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: EASE_OUT }}
@@ -431,7 +431,7 @@ const ArticleView = ({ blog }: { blog: BlogPost }) => {
               {meta.map((item, index) => (
                 <motion.span
                   key={item.text}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border/50 bg-background/30 backdrop-blur-md px-3 py-1.5"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border/50 bg-background/30 px-3 py-1.5"
                   initial={{ opacity: 0, y: 14, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.7 + index * 0.1, ease: EASE_OUT }}
@@ -457,8 +457,8 @@ const ArticleView = ({ blog }: { blog: BlogPost }) => {
             {/* Excerpt */}
             <motion.p
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed border-l-2 border-accent/60 pl-5"
-              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.1, ease: EASE_OUT }}
             >
               {blog.excerpt}

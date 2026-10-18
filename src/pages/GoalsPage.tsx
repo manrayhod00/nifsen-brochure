@@ -118,8 +118,8 @@ const HeroSection = () => (
 
         <motion.p
           className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0"
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.75, ease: EASE_OUT }}
         >
           Every financial goal deserves a dedicated strategy. Choose your goal and let's build a plan together.
@@ -148,7 +148,7 @@ const HeroSection = () => (
           {["Dedicated strategy per goal", "Clear time horizon", "Regular reviews"].map((chip, index) => (
             <motion.span
               key={chip}
-              className="trust-chip backdrop-blur-md"
+              className="trust-chip"
               initial={{ opacity: 0, y: 16, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: 1.2 + index * 0.12, ease: EASE_OUT }}
@@ -168,7 +168,7 @@ const HeroSection = () => (
 /* -------------------------------------------------------------------------- */
 
 const GoalsBand = () => (
-  <section className="relative py-7 border-y border-primary/15 bg-background/40 backdrop-blur-sm">
+  <section className="relative py-7 border-y border-primary/15 bg-background/40">
     <Marquee duration={40}>
       {goals.map((goal) => (
         <span key={goal.title} className="flex items-center gap-6 px-6 text-xl sm:text-2xl font-semibold whitespace-nowrap">
@@ -229,7 +229,7 @@ const GoalCard = ({ goal, index }: { goal: (typeof goals)[number]; index: number
 
       {/* Index badge */}
       <span
-        className="absolute left-5 top-4 text-xs font-mono text-accent/80 px-2.5 py-1 rounded-full bg-background/50 backdrop-blur-md border border-accent/20"
+        className="absolute left-5 top-4 text-xs font-mono text-accent/80 px-2.5 py-1 rounded-full bg-background/50 border border-accent/20"
         aria-hidden="true"
       >
         0{index + 1}
@@ -237,7 +237,7 @@ const GoalCard = ({ goal, index }: { goal: (typeof goals)[number]; index: number
 
       {/* Arrow chip */}
       <span
-        className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-accent/40 bg-background/50 backdrop-blur-md text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-45 group-hover:scale-110"
+        className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-accent/40 bg-background/50 text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-45 group-hover:scale-110"
         aria-hidden="true"
       >
         <ArrowUpRight className="w-4 h-4" />
@@ -245,7 +245,7 @@ const GoalCard = ({ goal, index }: { goal: (typeof goals)[number]; index: number
 
       {/* Glass strip with title, slides up on hover */}
       <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-        <div className="rounded-xl px-5 py-4 bg-background/70 backdrop-blur-md border border-accent/20 shadow-[0_4px_20px_hsla(0,0%,0%,0.3)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:border-accent/50">
+        <div className="rounded-xl px-5 py-4 bg-background/70 border border-accent/20 shadow-[0_4px_20px_hsla(0,0%,0%,0.3)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:border-accent/50">
           <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
             {goal.title}
           </h3>

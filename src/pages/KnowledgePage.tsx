@@ -125,8 +125,8 @@ const HeroSection = ({ topics }: { topics: string[] }) => {
 
           <motion.p
             className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0"
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.7, ease: EASE_OUT }}
           >
             In depth articles on investing, insurance, taxes and goal planning. Written for Indian investors, with
@@ -159,7 +159,7 @@ const HeroSection = ({ topics }: { topics: string[] }) => {
 /* -------------------------------------------------------------------------- */
 
 const TitlesBand = () => (
-  <section className="relative py-6 border-y border-primary/15 bg-background/40 backdrop-blur-sm">
+  <section className="relative py-6 border-y border-primary/15 bg-background/40">
     <Marquee duration={60}>
       {blogPosts.map((post) => (
         <Link
@@ -284,7 +284,7 @@ const ArticlesSection = ({ topics }: { topics: string[] }) => {
                   className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                     isActive
                       ? "border-accent/50 text-accent-foreground"
-                      : "border-primary/25 text-muted-foreground hover:text-foreground hover:border-accent/40 bg-background/30 backdrop-blur-md"
+                      : "border-primary/25 text-muted-foreground hover:text-foreground hover:border-accent/40 bg-background/30"
                   }`}
                 >
                   {isActive && (

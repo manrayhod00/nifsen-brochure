@@ -590,7 +590,7 @@ const CalculatorHero = ({ title, description }: { title: string; description: st
           <Magnetic strength={0.2}>
             <Link
               to="/calculators"
-              className="group inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm text-muted-foreground backdrop-blur-md transition-colors hover:text-foreground hover:border-accent/40"
+              className="group inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground hover:border-accent/40"
             >
               <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
               Back to Calculators
@@ -613,8 +613,8 @@ const CalculatorHero = ({ title, description }: { title: string; description: st
           </WordReveal>
           <motion.p
             className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT }}
           >
             {description}
@@ -680,7 +680,7 @@ const CalculatorDetailPage = () => {
 
           {/* Disclaimer */}
           <ScrollReveal delay={0.1}>
-            <div className="mt-8 flex items-start gap-3 p-4 sm:p-5 rounded-xl bg-muted/30 border border-border/30 backdrop-blur-md">
+            <div className="mt-8 flex items-start gap-3 p-4 sm:p-5 rounded-xl bg-muted/30 border border-border/30">
               <span className="icon-orb flex-shrink-0 mt-0.5 rounded-full">
                 <Info className="w-5 h-5 text-muted-foreground" />
               </span>

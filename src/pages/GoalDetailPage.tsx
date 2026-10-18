@@ -195,7 +195,7 @@ const HeroSection = ({ goal }: { goal: GoalDetail }) => {
         >
           <Link
             to="/goals"
-            className="group inline-flex items-center px-4 py-2 rounded-full bg-background/40 backdrop-blur-md border border-primary/30 text-sm text-muted-foreground hover:text-foreground hover:border-accent/40 mb-6 transition-colors"
+            className="group inline-flex items-center px-4 py-2 rounded-full bg-background/40 border border-primary/30 text-sm text-muted-foreground hover:text-foreground hover:border-accent/40 mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
             Back to Goals
@@ -218,8 +218,8 @@ const HeroSection = ({ goal }: { goal: GoalDetail }) => {
 
         <motion.p
           className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl"
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.7, ease: EASE_OUT }}
         >
           {goal.description}
@@ -231,7 +231,7 @@ const HeroSection = ({ goal }: { goal: GoalDetail }) => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, delay: 1, ease: EASE_OUT }}
         >
-          <span className="trust-chip backdrop-blur-md">
+          <span className="trust-chip">
             <Clock className="w-4 h-4 mr-2 text-accent" />
             {goal.timeHorizon}
           </span>
@@ -422,7 +422,7 @@ const OtherGoalsSection = ({ current }: { current: GoalType }) => {
                     aria-hidden="true"
                   />
                   <span
-                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-accent/40 bg-background/50 backdrop-blur-md text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-45"
+                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-accent/40 bg-background/50 text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-45"
                     aria-hidden="true"
                   >
                     <ArrowUpRight className="w-3.5 h-3.5" />

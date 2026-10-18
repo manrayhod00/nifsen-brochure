@@ -45,7 +45,7 @@ const heroFloatCards = [
   {
     icon: Building2,
     title: `${branches.length} offices`,
-    text: "Karnataka & Telangana",
+    text: "Karnataka, Telangana & West Bengal",
     className: "right-[6%] top-[22%]",
     float: "float-slow",
     delay: 1.1,
@@ -128,7 +128,7 @@ const HeroSection = () => {
           <div className="space-y-8 text-center lg:text-left">
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30"
               initial={{ opacity: 0, y: -12, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
@@ -150,8 +150,8 @@ const HeroSection = () => {
             {/* Subtext */}
             <motion.p
               className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0"
-              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1, ease: EASE_OUT }}
             >
               NIFSEN Investment Services Limited helps you invest with a transparent process, aligned to your goals,
@@ -183,7 +183,7 @@ const HeroSection = () => {
               {["Transparent process", "Integrity first", "Long term focus"].map((chip, index) => (
                 <motion.span
                   key={chip}
-                  className="trust-chip backdrop-blur-md"
+                  className="trust-chip"
                   initial={{ opacity: 0, y: 16, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.6, delay: 1.4 + index * 0.12, ease: EASE_OUT }}
@@ -231,7 +231,7 @@ const bandItems = [
 ];
 
 const ServicesBand = () => (
-  <section className="relative py-8 border-y border-primary/15 bg-background/40 backdrop-blur-sm">
+  <section className="relative py-8 border-y border-primary/15 bg-background/40">
     <Marquee duration={45}>
       {bandItems.map((item) => (
         <span key={item} className="flex items-center gap-6 px-6 text-xl sm:text-2xl font-semibold whitespace-nowrap">
@@ -539,11 +539,11 @@ const OfficesSection = () => (
     <div className="section-container">
       <SectionHeading
         eyebrow="Visit us"
-        title={<>Find us across <span className="text-shimmer-gold">Karnataka &amp; Telangana</span></>}
-        subtitle={`${branches.length} offices serving clients across Karnataka and Telangana.`}
+        title={<>Find us across <span className="text-shimmer-gold">Karnataka, Telangana &amp; West Bengal</span></>}
+        subtitle={`${branches.length} offices serving clients across Karnataka, Telangana and West Bengal, including our Research and Development Hub in Kolkata.`}
       />
 
-      <Stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {branches.map((branch) => (
           <Link key={branch.id} to="/contact#branches" className="block h-full">
             <GlassCard className="p-7 text-center h-full group" tilt>
@@ -552,9 +552,9 @@ const OfficesSection = () => (
               </div>
               <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{branch.city}</h3>
               <div className="text-xs text-muted-foreground mt-1">{branch.state}</div>
-              {branch.isHeadOffice || branch.isRegionalOffice ? (
+              {branch.isHeadOffice || branch.isRegionalOffice || branch.badge ? (
                 <span className="inline-block mt-3 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-accent/20 text-accent border border-accent/30">
-                  {branch.isHeadOffice ? "Head Office" : "Regional Office"}
+                  {branch.isHeadOffice ? "Head Office" : branch.isRegionalOffice ? "Regional Office" : branch.badge}
                 </span>
               ) : (
                 <span className="inline-block mt-3 text-xs text-muted-foreground px-2.5 py-1 rounded-full border border-border/50">
@@ -672,7 +672,7 @@ const HomePage = () => {
   useSEO({
     title: "NIFSEN Investment Services Limited | Goal First Investing",
     description:
-      "Mutual fund advisory, insurance planning and goal based wealth management across Karnataka and Telangana. A transparent process, disciplined reviews and guidance that fits your risk.",
+      "Mutual fund advisory, insurance planning and goal based wealth management across Karnataka, Telangana and West Bengal. A transparent process, disciplined reviews and guidance that fits your risk.",
     canonicalPath: "/",
   });
 

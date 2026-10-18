@@ -65,7 +65,7 @@
     --gradient-button: linear-gradient(135deg, hsl(262, 83%, 58%) 0%, hsl(280, 70%, 50%) 100%);
     
     /* Glass effect */
-    --glass-bg: hsla(252, 30%, 18%, 0.6);
+    --glass-bg: hsla(252, 30%, 16%, 0.82);
     --glass-border: hsla(262, 50%, 50%, 0.2);
     --glass-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
   }
@@ -88,7 +88,6 @@
       radial-gradient(ellipse 60% 40% at 100% 50%, hsla(280, 40%, 20%, 0.2) 0%, transparent 50%),
       radial-gradient(ellipse 60% 40% at 0% 80%, hsla(262, 50%, 20%, 0.2) 0%, transparent 50%),
       hsl(250, 30%, 8%);
-    background-attachment: fixed;
   }
 }
 
@@ -96,9 +95,8 @@
   /* Glassmorphism card */
   .glass-card {
     @apply relative overflow-hidden rounded-2xl;
+    /* Solid tint instead of backdrop blur: blurring the moving backdrop on every frame was the main cause of scroll lag */
     background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
   }
@@ -311,15 +309,17 @@
   inset: -20%;
   pointer-events: none;
   z-index: 0;
-  filter: blur(80px) saturate(140%);
-  opacity: 0.55;
+  opacity: 0.6;
+  contain: strict;
 }
 
+/* The radial gradients are already soft, so no filter blur or blend mode is needed.
+   Only transform animates, which the GPU handles without repainting. */
 .aurora-blob {
   position: absolute;
   border-radius: 9999px;
-  mix-blend-mode: screen;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .aurora-blob-1 {
@@ -327,7 +327,7 @@
   height: 46vw;
   left: 5%;
   top: 0%;
-  background: radial-gradient(circle, hsla(262, 83%, 58%, 0.55) 0%, transparent 65%);
+  background: radial-gradient(circle, hsla(262, 83%, 58%, 0.55) 0%, transparent 70%);
   animation: aurora-drift-1 26s ease-in-out infinite;
 }
 
@@ -336,7 +336,7 @@
   height: 38vw;
   right: 4%;
   top: 30%;
-  background: radial-gradient(circle, hsla(40, 80%, 55%, 0.35) 0%, transparent 65%);
+  background: radial-gradient(circle, hsla(40, 80%, 55%, 0.35) 0%, transparent 70%);
   animation: aurora-drift-2 32s ease-in-out infinite;
 }
 
@@ -345,7 +345,7 @@
   height: 50vw;
   left: 25%;
   bottom: -5%;
-  background: radial-gradient(circle, hsla(285, 70%, 45%, 0.45) 0%, transparent 65%);
+  background: radial-gradient(circle, hsla(285, 70%, 45%, 0.45) 0%, transparent 70%);
   animation: aurora-drift-3 38s ease-in-out infinite;
 }
 
@@ -354,7 +354,7 @@
   height: 28vw;
   left: 55%;
   top: 5%;
-  background: radial-gradient(circle, hsla(220, 80%, 55%, 0.25) 0%, transparent 65%);
+  background: radial-gradient(circle, hsla(220, 80%, 55%, 0.25) 0%, transparent 70%);
   animation: aurora-drift-2 44s ease-in-out infinite reverse;
 }
 
@@ -393,6 +393,7 @@
     radial-gradient(1px 1px at 48% 92%, hsla(262, 80%, 85%, 0.6), transparent 60%),
     radial-gradient(1px 1px at 66% 74%, hsla(0, 0%, 100%, 0.5), transparent 60%);
   animation: twinkle 7s ease-in-out infinite alternate;
+  will-change: opacity;
 }
 
 .starfield-2 {
@@ -414,20 +415,29 @@
   inset: auto 0 0 0;
   height: 45%;
   pointer-events: none;
-  background-image:
-    linear-gradient(hsla(262, 70%, 70%, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, hsla(262, 70%, 70%, 0.12) 1px, transparent 1px);
-  background-size: 56px 56px;
+  overflow: hidden;
   transform: perspective(500px) rotateX(60deg);
   transform-origin: bottom;
   mask-image: linear-gradient(to top, black 0%, transparent 85%);
   -webkit-mask-image: linear-gradient(to top, black 0%, transparent 85%);
+}
+
+/* The lines live on an oversized child that slides by one cell, so the drift is a cheap transform */
+.grid-floor::before {
+  content: "";
+  position: absolute;
+  inset: -56px 0 0 0;
+  background-image:
+    linear-gradient(hsla(262, 70%, 70%, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, hsla(262, 70%, 70%, 0.12) 1px, transparent 1px);
+  background-size: 56px 56px;
+  will-change: transform;
   animation: grid-scroll 6s linear infinite;
 }
 
 @keyframes grid-scroll {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 0 56px, 0 0; }
+  from { transform: translateY(0); }
+  to { transform: translateY(56px); }
 }
 
 /* ---- Living gold text: a slow shine that never stops ---- */
@@ -497,8 +507,6 @@
 
 .btn-secondary {
   position: relative;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 /* ---- Glass cards: pointer spotlight and glowing edge ---- */
@@ -673,7 +681,26 @@
   color: hsl(var(--gold-light));
   background: hsla(262, 60%, 40%, 0.18);
   border: 1px solid hsla(45, 80%, 60%, 0.25);
-  backdrop-filter: blur(6px);
+}
+
+/* Decorative glow orbs: a radial mask gives the same soft edge as a 64px blur
+   without the per frame filter cost while they breathe */
+.blur-3xl {
+  filter: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+  will-change: transform, opacity;
+}
+
+/* Phones and tablets: keep the look, drop the constantly moving background layers */
+@media (max-width: 1024px), (pointer: coarse) {
+  .aurora-blob,
+  .starfield {
+    animation: none !important;
+  }
+  .starfield-2 {
+    display: none;
+  }
 }
 
 /* Pause everything when the tab is hidden (set by Layout) */

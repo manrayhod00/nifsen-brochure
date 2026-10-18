@@ -125,8 +125,8 @@ export const SectionHeading = ({
       {subtitle && (
         <motion.p
           className={cn("mt-5 text-muted-foreground max-w-2xl text-lg leading-relaxed", centered && "mx-auto")}
-          initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-          animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT }}
         >
           {subtitle}
@@ -348,14 +348,12 @@ export const Stagger = ({
         <motion.div
           className="h-full"
           variants={{
-            hidden: { opacity: 0, y: 50, scale: 0.96, filter: "blur(8px)" },
+            hidden: { opacity: 0, y: 50, scale: 0.96 },
             show: {
               opacity: 1,
               y: 0,
               scale: 1,
-              filter: "blur(0px)",
               transition: { duration: 0.9, ease: EASE_OUT },
-              transitionEnd: { filter: "none" },
             },
           }}
         >

@@ -97,8 +97,8 @@ const HeroSection = () => {
 
           <motion.p
             className="text-xl text-muted-foreground leading-relaxed max-w-2xl"
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.8, ease: EASE_OUT }}
           >
             Use our free financial calculators to plan your investments and understand your options better.
@@ -122,7 +122,7 @@ const HeroSection = () => {
 /* -------------------------------------------------------------------------- */
 
 const CalculatorsBand = () => (
-  <section className="relative py-6 border-y border-primary/15 bg-background/40 backdrop-blur-sm" aria-hidden="true">
+  <section className="relative py-6 border-y border-primary/15 bg-background/40" aria-hidden="true">
     <Marquee duration={35}>
       {calculators.map((calc) => (
         <span key={calc.title} className="flex items-center gap-6 px-6 text-lg sm:text-xl font-semibold whitespace-nowrap">

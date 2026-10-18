@@ -312,7 +312,7 @@ const Header = () => {
           <div
             className={`flex items-center justify-between rounded-full border px-3 sm:px-5 transition-all duration-500 ${
               scrolled
-                ? "py-1.5 border-primary/25 bg-background/70 backdrop-blur-xl shadow-[0_10px_40px_-10px_hsla(262,83%,40%,0.55)]"
+                ? "py-1.5 border-primary/25 bg-background/90 backdrop-blur-md shadow-[0_10px_40px_-10px_hsla(262,83%,40%,0.55)]"
                 : "py-2.5 border-transparent bg-transparent"
             }`}
           >

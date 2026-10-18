@@ -36,7 +36,6 @@ const ScrollReveal = ({
 
   const initial = {
     opacity: 0,
-    filter: "blur(10px)",
     scale: scale ? 0.94 : 1,
     ...directions[direction],
   };
@@ -45,7 +44,7 @@ const ScrollReveal = ({
     <motion.div
       ref={ref}
       initial={initial}
-      animate={isInView ? { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)", transitionEnd: { filter: "none" } } : initial}
+      animate={isInView ? { opacity: 1, x: 0, y: 0, scale: 1 } : initial}
       transition={{
         duration,
         delay,

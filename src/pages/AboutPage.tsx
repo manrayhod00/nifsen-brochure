@@ -56,7 +56,7 @@ const heroFloatCards = [
   {
     icon: Building2,
     title: `${branches.length} offices`,
-    text: "Karnataka & Telangana",
+    text: "Karnataka, Telangana & West Bengal",
     className: "right-[8%] top-[24%]",
     float: "float-slow",
     delay: 1.1,
@@ -139,7 +139,7 @@ const HeroSection = () => {
           <div className="space-y-8 text-center lg:text-left">
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30"
               initial={{ opacity: 0, y: -12, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
@@ -159,8 +159,8 @@ const HeroSection = () => {
             {/* Subtext */}
             <motion.p
               className="text-lg text-muted-foreground max-w-lg leading-relaxed mx-auto lg:mx-0"
-              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1, ease: EASE_OUT }}
             >
               NIFSEN Investment Services Limited was founded with a simple belief: financial planning should be goal
@@ -298,7 +298,7 @@ const StorySection = () => {
 /* -------------------------------------------------------------------------- */
 
 const ValuesBand = () => (
-  <section className="relative py-8 border-y border-primary/15 bg-background/40 backdrop-blur-sm" aria-hidden="true">
+  <section className="relative py-8 border-y border-primary/15 bg-background/40" aria-hidden="true">
     <Marquee duration={40}>
       {values.map((value) => (
         <span key={value.title} className="flex items-center gap-6 px-6 text-xl sm:text-2xl font-semibold whitespace-nowrap">
@@ -325,7 +325,7 @@ const CorporateSection = () => {
       <div className="section-container relative z-10">
         <div className="text-center">
           <ScrollReveal scale>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 border border-accent/30 backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 border border-accent/30 mb-6">
               <BadgeCheck className="w-4 h-4 text-accent" aria-hidden="true" />
               <span className="text-sm font-medium text-foreground/90">ISIN activated · Securities ready</span>
             </div>
@@ -535,7 +535,7 @@ const OfficesSection = () => (
       <SectionHeading
         eyebrow="Visit us"
         title={<>Where to <span className="text-shimmer-gold">find us</span></>}
-        subtitle="Four offices across Karnataka and Telangana. Drop in at the one closest to you."
+        subtitle={`${branches.length} offices across Karnataka, Telangana and West Bengal. Drop in at the one closest to you.`}
       />
 
       <Stagger className="grid md:grid-cols-2 gap-6" stagger={0.12}>
@@ -559,6 +559,11 @@ const OfficesSection = () => (
                   {branch.isRegionalOffice && (
                     <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
                       Regional Office
+                    </span>
+                  )}
+                  {branch.badge && (
+                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+                      {branch.badge}
                     </span>
                   )}
                 </div>

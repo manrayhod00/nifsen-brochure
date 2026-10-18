@@ -175,6 +175,9 @@ const Footer = () => {
                         {branch.isRegionalOffice && (
                           <span className="ml-1 text-accent normal-case font-medium">(Regional Office)</span>
                         )}
+                        {branch.badge && (
+                          <span className="ml-1 text-accent normal-case font-medium">({branch.badge})</span>
+                        )}
                       </span>
                       <span className="block text-xs">
                         {branch.addressLines.map((line, j) => (

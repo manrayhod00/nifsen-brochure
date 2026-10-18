@@ -110,6 +110,11 @@ const BranchCard = ({ branch }: { branch: Branch }) => (
               Regional Office
             </span>
           )}
+          {branch.badge && (
+            <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+              {branch.badge}
+            </span>
+          )}
         </div>
         <p className="text-muted-foreground text-sm leading-relaxed break-words">
           {branch.addressLines.map((line, i) => (
@@ -231,12 +236,12 @@ const HeroSection = () => {
 
           <motion.p
             className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0"
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.7, ease: EASE_OUT }}
           >
             Have questions? Want to discuss your financial goals? We're here to help, across our offices in
-            Ballari, Hyderabad, Bidar, and Gangavathi.
+            Ballari, Hyderabad, Bidar, Gangavathi, and Kolkata.
           </motion.p>
 
           <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
@@ -244,7 +249,7 @@ const HeroSection = () => {
               <motion.a
                 key={chip.label}
                 href={chip.href}
-                className="trust-chip backdrop-blur-md group hover:border-accent/50 transition-colors"
+                className="trust-chip group hover:border-accent/50 transition-colors"
                 initial={{ opacity: 0, y: 16, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1 + index * 0.12, ease: EASE_OUT }}
@@ -265,7 +270,7 @@ const HeroSection = () => {
 /* -------------------------------------------------------------------------- */
 
 const CityBand = () => (
-  <section className="relative py-6 border-y border-primary/15 bg-background/40 backdrop-blur-sm" aria-hidden="true">
+  <section className="relative py-6 border-y border-primary/15 bg-background/40" aria-hidden="true">
     <Marquee duration={35}>
       {[...branches, ...branches].map((branch, i) => (
         <span key={`${branch.id}-${i}`} className="flex items-center gap-6 px-6 text-xl sm:text-2xl font-semibold whitespace-nowrap">
@@ -283,8 +288,8 @@ const CityBand = () => (
 
 const ContactPage = () => {
   useSEO({
-    title: "Contact Us | Ballari, Hyderabad, Bidar & Gangavathi",
-    description: `Talk to ${contact.companyName}. Offices in Ballari (Head Office), Hyderabad (Regional Office), Bidar, and Gangavathi.`,
+    title: "Contact Us | Ballari, Hyderabad, Bidar, Gangavathi & Kolkata",
+    description: `Talk to ${contact.companyName}. Offices in Ballari (Head Office), Hyderabad (Regional Office), Bidar, Gangavathi, and Kolkata.`,
     canonicalPath: "/contact",
   });
 
@@ -565,7 +570,7 @@ const ContactPage = () => {
               <ScrollReveal delay={0.25} scale>
                 <div className="space-y-3">
                   <div
-                    className="flex flex-wrap gap-2 rounded-3xl sm:rounded-full p-1.5 bg-muted/30 border border-border/40 backdrop-blur-md w-full sm:w-fit"
+                    className="flex flex-wrap gap-2 rounded-3xl sm:rounded-full p-1.5 bg-muted/30 border border-border/40 w-full sm:w-fit"
                     role="tablist"
                     aria-label="Office location"
                   >
@@ -653,7 +658,7 @@ const ContactPage = () => {
           <SectionHeading
             eyebrow="Visit us"
             title={<>Our <span className="text-shimmer-gold">Offices</span></>}
-            subtitle={`${branches.length} offices serving clients across Karnataka and Telangana.`}
+            subtitle={`${branches.length} offices serving clients across Karnataka, Telangana and West Bengal.`}
           />
           <Stagger className="grid md:grid-cols-2 xl:grid-cols-4 gap-6" stagger={0.12}>
             {branches.map((branch) => (

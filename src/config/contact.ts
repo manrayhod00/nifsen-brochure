@@ -1,8 +1,9 @@
 export interface Branch {
-  id: "bellary" | "hyderabad" | "bidar" | "gangavathi";
+  id: "bellary" | "hyderabad" | "bidar" | "gangavathi" | "kolkata";
   city: string;
   isHeadOffice?: boolean;
   isRegionalOffice?: boolean;
+  badge?: string;         // extra office label, e.g. "Research and Development Hub"
   addressLines: string[];
   pincode: string;
   state: string;
@@ -34,6 +35,7 @@ export const branches: Branch[] = [
     mapEmbedUrl: "https://www.google.com/maps?q=15.156939,76.932528&z=17&output=embed",
     phone: "+918088071633",
     phoneDisplay: formatIndianPhone("8088071633"),
+    manager: { name: "Nandeesha", role: "Chief Marketing Officer" },
   },
   {
     id: "hyderabad",
@@ -70,16 +72,30 @@ export const branches: Branch[] = [
     id: "gangavathi",
     city: "Gangavathi",
     addressLines: [
-      "Motilal Oswal Shop 1, Ward 5,",
-      "CBS Complex, Bus Stand Road,",
-      "Koppal District,",
+      "Sree Complex, Shop No. 05,",
+      "Venkateshwar Colony, Vaddarahatti,",
+      "Gangavathi, Koppal District,",
     ],
-    pincode: "583227",
+    pincode: "583235",
     state: "Karnataka",
-    mapEmbedUrl: "https://www.google.com/maps?q=15.432166,76.530835&z=17&output=embed",
-    phone: "+918762358781",
-    phoneDisplay: formatIndianPhone("8762358781"),
-    manager: { name: "Yousuf MD" },
+    mapEmbedUrl: "https://www.google.com/maps?q=Venkateshwar+Colony,+Vaddarahatti,+Gangavathi+583235&z=16&output=embed",
+    phone: "+917892884747",
+    phoneDisplay: formatIndianPhone("7892884747"),
+    manager: { name: "Satish Baliza", role: "Chief Operational Officer" },
+  },
+  {
+    // Placeholder workspace until the final Kolkata office address is confirmed
+    id: "kolkata",
+    city: "Kolkata",
+    badge: "Research and Development Hub",
+    addressLines: [
+      "Ambuja Neotia EcoCentre, EM 4,",
+      "Sector V, Salt Lake City,",
+    ],
+    pincode: "700091",
+    state: "West Bengal",
+    mapEmbedUrl: "https://www.google.com/maps?q=Ambuja+Neotia+EcoCentre,+Sector+V,+Salt+Lake,+Kolkata&z=16&output=embed",
+    manager: { name: "Amitrajit Chattopadhya", role: "Chief Research Officer" },
   },
 ];
 

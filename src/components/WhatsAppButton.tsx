@@ -6,7 +6,7 @@ import { contact, whatsappLink } from "@/config/contact";
 
 /** Tooltip that slides in from the right when its button is hovered or focused */
 const Tooltip = ({ children }: { children: ReactNode }) => (
-  <span className="pointer-events-none absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 translate-x-2 whitespace-nowrap rounded-lg border border-border/40 bg-card/90 px-3 py-2 text-sm text-foreground opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 sm:block">
+  <span className="pointer-events-none absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 translate-x-2 whitespace-nowrap rounded-lg border border-border/40 bg-card/90 px-3 py-2 text-sm text-foreground opacity-0 shadow-lg transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 sm:block">
     {children}
   </span>
 );

@@ -123,8 +123,8 @@ const HeroSection = () => {
 
           <motion.p
             className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.9, ease: EASE_OUT }}
           >
             Comprehensive financial guidance that puts your interests first. From mutual funds to insurance, we've got
@@ -137,7 +137,7 @@ const HeroSection = () => {
               <motion.a
                 key={service.id}
                 href={`#${service.id}`}
-                className="trust-chip backdrop-blur-md group transition-colors hover:border-accent/50 hover:text-accent"
+                className="trust-chip group transition-colors hover:border-accent/50 hover:text-accent"
                 initial={{ opacity: 0, y: 16, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1.1 + index * 0.12, ease: EASE_OUT }}
@@ -172,7 +172,7 @@ const HeroSection = () => {
 /* -------------------------------------------------------------------------- */
 
 const ServicesBand = () => (
-  <section className="relative py-8 border-y border-primary/15 bg-background/40 backdrop-blur-sm" aria-hidden="true">
+  <section className="relative py-8 border-y border-primary/15 bg-background/40" aria-hidden="true">
     <Marquee duration={40}>
       {services.map((service) => (
         <span key={service.id} className="flex items-center gap-6 px-6 text-xl sm:text-2xl font-semibold whitespace-nowrap">
@@ -269,7 +269,7 @@ const ServicePanel = ({
               </motion.p>
 
               <motion.div
-                className="rounded-2xl border border-primary/20 bg-primary/10 p-5 backdrop-blur-sm"
+                className="rounded-2xl border border-primary/20 bg-primary/10 p-5"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
