@@ -383,7 +383,7 @@ const WhyNifsenSection = () => {
 const NumbersSection = () => {
   const stats = [
     { value: branches.length, label: "Offices" },
-    { value: 2, label: "States served" },
+    { value: new Set(branches.map((b) => b.state)).size, label: "States served" },
     { value: 6, label: "Life goals we plan for" },
     { value: 4, label: "Free calculators" },
   ];
